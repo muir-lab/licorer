@@ -1,6 +1,7 @@
 #' Reading in LiCor files
 #'
-#' @param x File name
+#' @param x A file name for a licor data file
+#' @param deci Whether to set the decimal as a "." or a ","
 #'
 #' @return Returns a dataframe from raw LiCor files. Current support
 #' for LiCor 6800 files only. LiCor 6400 file reading will be supported
@@ -14,7 +15,7 @@
 #' @rdname read_licors
 #' @export
 
-read_li6800 <- function(x) {
+read_li6800 <- function(x, deci = ".") {
   #Read in header information
   header <- read.csv(file = x, header = TRUE, sep = "\t",
                      skip = grep(pattern = "\\[Data\\]",
@@ -25,7 +26,7 @@ read_li6800 <- function(x) {
   data <- read.csv(file = x, header = FALSE, sep = "\t",
                    skip = grep(pattern = "\\[Data\\]",
                                      x = readLines(x),
-                                  value = FALSE) + 3)
+                                  value = FALSE) + 3, dec = deci)
 
   #Add header to data
   colnames(data) <- colnames(header)
@@ -34,15 +35,32 @@ read_li6800 <- function(x) {
 }
 
 
-#'Reads in data from a licore raw data file
+#' Reads Data from raw LiCor files and organizes into class licor.
 #'
-read_li6800_raw <- function(filename) {
+#' @param filename The name of the file to read from
+#' @param deci Whether to set the decimal as a "." or a ","
+#'
+#' @return Returns an object of class licor from raw LiCor files. Current support
+#' for LiCor 6800 files only. LiCor 6400 file reading will be supported
+#' in a later version.
+#' @importFrom utils read.csv
+#' @export
+#'
+#' @examples \donttest{
+#' read_li6800_raw(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
+#' read_li6800_raw("/path/filename")
+#' }
+#' @rdname read_li6800_raw
+#' @export
+
+read_li6800_raw <- function(filename, deci = ".") {
   #read in types markers
-  types <- read.csv(file = filename, header = TRUE, sep = "\t",
+  types <- read.csv(file = filename, header = FALSE, sep = "\t",
                      skip = grep(pattern = "\\[Data\\]",
                                  x = readLines(filename),
                                  value = FALSE),
                      nrows = 1)
+  types <- unitarray <- as.vector(unlist(types))
 
   #Read in header information
   header <- read.csv(file = filename, header = TRUE, sep = "\t",
@@ -60,6 +78,7 @@ read_li6800_raw <- function(filename) {
 
   fixed <- gsub("⁻¹", "^-1)", unitarray)
   fixed <- gsub("⁻²", "^-2)", fixed)
+  fixed <- gsub("²", "^2)", fixed)
   fixed <- gsub(" ", " * (", fixed)
   fixed <- gsub("^(?=.*\\))((?!.*\\())", "\\(\\1", fixed, perl = TRUE)
 
@@ -67,7 +86,7 @@ read_li6800_raw <- function(filename) {
   data <- read.csv(file = filename, header = FALSE, sep = "\t",
                    skip = grep(pattern = "\\[Data\\]",
                                x = readLines(filename),
-                               value = FALSE) + 3)
+                               value = FALSE) + 3, dec = deci)
 
   #apply units to the data
   for (i in 1:ncol(data)) {
@@ -79,7 +98,100 @@ read_li6800_raw <- function(filename) {
   #Add header to data
   colnames(data) <- colnames(header)
 
+  #add data type/source to the columns
+  attr(data, "data_type") <- types
 
-  #Return data
-  return(data)
+  #Create the class
+  licor_data <- structure(data, class = c("licor", "data.frame"))
+
+  #Load in the external data into the class
+  external <- read.csv(file = filename, header = TRUE, sep = "\n", nrows = 50)
+  external <- as.list(unlist(external))
+  temp <- str_extract(external, ".*(?=\\t)")
+  external <- gsub(".*\\t", "", external, perl = TRUE)
+  attr(external, "names") <- as.list(temp)
+  external <- as.list(unlist(external))
+
+  attr(licor_data, "header_data") <- external
+
+  #Return the class
+  return(licor_data)
+}
+
+#' Constructor for class licor.
+#'
+#' @param filename The name of the file to read from
+#' @param deci Whether to set the decimal as a "." or a ","
+#'
+#' @return Object of class licor
+#' @importFrom utils read.csv
+#' @export
+#'
+#' @examples
+#' new_licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
+#' new_licor("/path/filename")
+#'
+#' @rdname new_licor
+#' @export
+
+new_licor <- function(filename, deci = ".") {
+  read_li6800_raw(filename, deci)
+}
+
+#' Validator for class licor.
+#'
+#' @param x x
+#'
+#' @return x
+#' @importFrom utils read.csv
+#' @export
+#'
+#' @examples \donttest{
+#' validate_licor(licor_object)
+#' }
+#' @rdname validate_licor
+#' @export
+
+validate_licor <- function (x) {
+  values <- unclass(x)
+  for (i in 1:length(values)) {
+    test_unit[i] <- class(values[[i]])
+  }
+  if (sum(test_unit == "units") < 1) {
+    stop(
+      "Data values do not have units!",
+      call. = FALSE
+    )
+  }
+  head_attrib <- attributes(see)$header
+  if (class(head_attrib) != "list" | length(head_attrib) < 2) {
+    stop(
+      "Header attributes missing!",
+      call. = FALSE
+    )
+  }
+  x
+}
+
+#' Helper for class licor. Creates licor class objects.
+#'
+#' @param filename The name of the licor raw file to read.
+#' @param deci Wheter the decimal is "." or ","
+#'
+#' @return Returns an object of class licor, checked for correctness. Supports
+#' 6800 files currently. Correct licor objects have units on their variables
+#' and an attribute containg the data from the header of the file.
+#' @importFrom utils read.csv
+#' @export
+#'
+#' @examples
+#' licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
+#' @examples \donttest{
+#' licor("/path/filename")
+#'}
+#' @rdname licor
+#' @export
+
+licor <- function(filename, deci = ".") {
+  validate_licor(new_licor(filename, deci))
 }
