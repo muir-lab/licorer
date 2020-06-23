@@ -1,0 +1,61 @@
+---
+title: "Loading Data"
+author: "Daniel Trupp"
+date: "June 23, 2020"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{loading-data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding[UTF-8]{inputenc}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Loading data from raw LiCor files is designed to be streamlined in this package. 
+To load data from a licor 6800 file, use either the "read_li6800_raw" method or the
+"licor" method. The licor method is a more generalized method that validates the 
+licor object. Both of these options will create a "licor" object, which is a child
+of the data.frame class. We'll load in the data included with the licor package.
+
+```{r setup}
+library(licorer)
+library(units)
+library(stringr)
+library(knitr)
+library(kableExtra)
+
+test_data <- licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
+
+scroll_box(knitr::kable(test_data, caption = "Example"),
+            height = "250px", width = "700px", 
+            box_css = "border: 1px solid #ddd; padding: 5px; ", 
+            extra_css = NULL, fixed_thead = TRUE)
+```
+
+As you can see, there is a lot of data. There are 330 rows and 146 columns.
+Most of the units in the data have units which are automatically assigned to them
+when the file is loaded. To make this easier to parse, rows fall into a few different categories which are stored as attributes to the row names. These are covered in greater detail in the vignette on data operations, but are given by the "subset_options" method.
+
+```{r}
+subset_options(test_data)
+```
+
+The data columns covered by each of these values are expressly stated in the licor
+manual's "Summary of symbols" section.  In addition to data, the "licor" class stores meta-data from the header of the licor file. This information is accessible with the "header"attribute.
+
+```{r}
+attributes(test_data)$header[1:5]
+```
+
+Once again we are showing a subset of the list, as the actual list of meta-data
+contains around 50 elements. There is a "licor_validator" that ensures that the 
+"licor" class was created correctly. It is automatically called during the "licor"
+mehtod call, but not during the "read_li6800_raw" method.
+
+Currently, the data reader only supports reading from licor 6800 files, but we 
+plan to add support for the licore 6400 as well.

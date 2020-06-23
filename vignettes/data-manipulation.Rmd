@@ -1,0 +1,66 @@
+---
+title: "Working with Data in LiCor Objects"
+author: "Daniel Trupp"
+date: "June 23, 2020"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Working with Data in LiCor Objects}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding[UTF-8]{inputenc}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Being a child of the "data.frame" class, the "licor" class has inherited methods
+for performing operations on data and displaying the results, the "licorer" 
+package provides a few extra useful methods. We'll start with loading the data.
+
+```{r setup}
+library(licorer)
+library(units)
+library(stringr)
+library(knitr)
+library(kableExtra)
+
+test_data <- licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
+```
+
+## Creting a Subset of the Data
+
+There are two options for subsetting the data, "subset" and "subset_logic". The
+"subset" option takes the data and a vector of options to subset the data by (taken
+from the "subset_options" function) and returns a data frame with only those variables.
+We'll show this with the "GasEx" option.
+
+```{r}
+subset_options(test_data)
+
+scroll_box(knitr::kable(subset(test_data, "GasEx")[1:5, ]),
+            height = "250px", width = "700px", 
+            box_css = "border: 1px solid #ddd; padding: 5px; ", 
+            extra_css = NULL, fixed_thead = TRUE)
+```
+
+Once again we limit the size of the data shown to conserve space. This method is 
+data-destructive, as the returned data table is no longer a "licor" object and
+lacks the header data. It does, however, preserve units.
+
+The "subset_logic" function works similarly, except it returns a logical vector 
+to apply to the columns. It is non-data-destructive, as it creates a boolean vector.
+This vetor is input in the column space to show the desired columns. We'll show
+this with the "Sys" and "FlrLS" options.
+
+```{r}
+choice_vec <- c("Sys", "FlrLS")
+
+scroll_box(knitr::kable(test_data[1:5, subset_logic(test_data, choice_vec)]),
+            height = "250px", width = "700px", 
+            box_css = "border: 1px solid #ddd; padding: 5px; ", 
+            extra_css = NULL, fixed_thead = TRUE)
+```
+

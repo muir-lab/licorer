@@ -99,7 +99,7 @@ read_li6800_raw <- function(filename, deci = ".") {
   colnames(data) <- colnames(header)
 
   #add data type/source to the columns
-  attr(data, "data_type") <- types
+  attr(attributes(data)$names, "data_type") <- types
 
   #Create the class
   licor_data <- structure(data, class = c("licor", "data.frame"))
@@ -154,16 +154,18 @@ new_licor <- function(filename, deci = ".") {
 
 validate_licor <- function (x) {
   values <- unclass(x)
+  test_unit <- vector(length = length(values))
   for (i in 1:length(values)) {
     test_unit[i] <- class(values[[i]])
   }
+  #increase strictness on units
   if (sum(test_unit == "units") < 1) {
     stop(
       "Data values do not have units!",
       call. = FALSE
     )
   }
-  head_attrib <- attributes(see)$header
+  head_attrib <- attributes(values)$header
   if (class(head_attrib) != "list" | length(head_attrib) < 2) {
     stop(
       "Header attributes missing!",
