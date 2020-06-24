@@ -76,9 +76,8 @@ read_li6800_raw <- function(filename, deci = ".") {
                      nrows = 1)
   unitarray <- as.vector(unlist(read_units))
 
-  fixed <- gsub("⁻¹", "^-1)", unitarray)
-  fixed <- gsub("⁻²", "^-2)", fixed)
-  fixed <- gsub("²", "^2)", fixed)
+  fixed <- gsub("⁻([¹,²,³,⁴,⁵,⁶,⁷,⁸,⁹]*)", "^-\\1)", unitarray)
+  fixed <- chartr("¹²³⁴⁵⁶⁷⁸⁹", "123456789", fixed)
   fixed <- gsub(" ", " * (", fixed)
   fixed <- gsub("^(?=.*\\))((?!.*\\())", "\\(\\1", fixed, perl = TRUE)
 
