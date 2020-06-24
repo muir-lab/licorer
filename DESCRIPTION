@@ -1,9 +1,9 @@
 Package: licorer
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Reading and processing for LiCor data files
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Author: Daniel Trupp
+Maintainer: Daniel Trupp <daniel.r.trupp@gmail.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: What license is it under?
@@ -12,5 +12,6 @@ LazyData: true
 RoxygenNote: 7.1.0
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr

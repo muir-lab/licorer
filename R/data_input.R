@@ -114,6 +114,20 @@ read_li6800_raw <- function(filename, deci = ".") {
 
   attr(licor_data, "header_data") <- external
 
+
+  #Fix unitless data
+  for (i in 1:ncol(licor_data)) {
+    if (!subset_logic(licor_data, c("Sys", "UserDefVar"))[i]) {
+      if (is.na(fixed[i]) & (class(licor_data[,i]) == "numeric" |
+                             class(licor_data[,i]) == "integer")) {
+        units(licor_data[,i]) <- unitless
+      }
+    } else if (is.na(fixed[i]) & (class(licor_data[,i]) == "numeric" |
+                                  class(licor_data[,i]) == "integer")) {
+      licor_data[,i] <- as.character(data[,i])
+    }
+  }
+
   #Return the class
   return(licor_data)
 }
@@ -159,16 +173,24 @@ validate_licor <- function (x) {
     test_unit[i] <- class(values[[i]])
   }
   #increase strictness on units
-  if (sum(test_unit == "units") < 1) {
+  if (!all(test_unit[test_unit != "character" & test_unit != "logical"] == "units")) {
     stop(
       "Data values do not have units!",
       call. = FALSE
     )
   }
+  #ensure header is correct
   head_attrib <- attributes(values)$header
-  if (class(head_attrib) != "list" | length(head_attrib) < 2) {
+  if (class(head_attrib) != "list" | length(head_attrib) < 50) {
     stop(
       "Header attributes missing!",
+      call. = FALSE
+    )
+  }
+  #ensure data columns have attribute
+  if (length(attr(attributes(fixed)$names, "data_type")) != length(attributes(fixed)$names)) {
+    stop(
+      "One or more columns is missing a category assignment!",
       call. = FALSE
     )
   }

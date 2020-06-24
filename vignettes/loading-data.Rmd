@@ -38,8 +38,8 @@ scroll_box(knitr::kable(test_data, caption = "Example"),
 ```
 
 As you can see, there is a lot of data. There are 330 rows and 146 columns.
-Most of the units in the data have units which are automatically assigned to them
-when the file is loaded. To make this easier to parse, rows fall into a few different categories which are stored as attributes to the row names. These are covered in greater detail in the vignette on data operations, but are given by the "subset_options" method.
+All of the data is either a character or has a unit (some have the "unitless" unit) 
+which are automatically assigned to them when the file is loaded. To make this easier to parse, rows fall into a few different categories which are stored as attributes to the row names. These are covered in greater detail in the vignette on data operations, but are given by the "subset_options" method.
 
 ```{r}
 subset_options(test_data)
