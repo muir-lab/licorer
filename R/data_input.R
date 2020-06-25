@@ -1,6 +1,5 @@
 #' Reads data from LI-6800 file and organizes it into class licor.
 #'
-#' @inheritParams read.csv
 #'
 #' @return Returns a dataframe from raw LiCor files. Current support
 #' for LiCor 6800 files only. LiCor 6400 file reading will be supported
@@ -170,7 +169,6 @@ read_li6800_raw <- function(file, dec = ".") {
 #' @param deci Whether to set the decimal as a "." or a ","
 #'
 #' @return Object of class licor
-#' @importFrom utils read.csv
 #' @export
 #'
 #' @examples
@@ -189,7 +187,6 @@ new_licor <- function(file, deci = ".") {
 #' @param x x
 #'
 #' @return x
-#' @importFrom utils read.csv
 #' @export
 #'
 #' @examples \donttest{
@@ -241,7 +238,6 @@ validate_licor <- function (x) {
 #' @return Returns an object of class licor, checked for correctness. Supports
 #' 6800 files currently. Correct licor objects have units on their variables
 #' and an attribute containg the data from the header of the file.
-#' @importFrom utils read.csv
 #' @export
 #'
 #' @examples

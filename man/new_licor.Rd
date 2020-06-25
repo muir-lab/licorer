@@ -4,10 +4,10 @@
 \alias{new_licor}
 \title{Constructor for class licor.}
 \usage{
-new_licor(filename, deci = ".")
+new_licor(file, deci = ".")
 }
 \arguments{
-\item{filename}{The name of the file to read from}
+\item{file}{The name of the file to read from}
 
 \item{deci}{Whether to set the decimal as a "." or a ","}
 }

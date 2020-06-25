@@ -1,14 +1,16 @@
 #' Creating a subset of the data
 #'
 #' @param x A licor object
-#' @param vec A vector of subset options
+#' @param vec A vector of subset options, and can be any permutation of the
+#' options presented by the 'subset_options' function, for example, vec could
+#' be 'c("Sys","GasEx")'
 #'
 #' @return Returns a data.frame with the subset of data specified
 #'
 #' @examples \donttest{
 #'
 #' }
-#' @rdname subset
+#' @rdname licor_subset
 #' @export
 
 licor_subset <- function(x, vec) {
@@ -65,6 +67,6 @@ subset_options <- function(x) {
 #' @rdname get_remarks
 #' @export
 
-get_remarks(x) {
-
+get_remarks <- function(x) {
+  cat("Not implemented yet.")
 }
