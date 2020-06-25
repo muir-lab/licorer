@@ -44,7 +44,7 @@ read_li6800 <- function(file, dec = ".") {
 #'
 #' @export
 read_li6800_excel <- function(file, dec = ".") {
-
+  readxl::read_excel(file)
   stop("Reading excel files exported from LI-6800 is not supported yet. Use raw files.")
 
 }
@@ -101,11 +101,15 @@ read_li6800_raw <- function(file, dec = ".") {
   # Read in remarks ----
   data_lines <- raw_lines[(types_line + 3L):length(raw_lines)]
   remark_lines <- data_lines[purrr::map_lgl(data_lines, is_remark)]
-  remarks <- readr::read_tsv(remark_lines, col_names = FALSE)
+  if (length(remark_lines) != 0) {
+    remarks <- readr::read_tsv(remark_lines, col_names = FALSE)
+  }
 
   # Read in data information ----
   # NEED TO INCLUDE DECIMAL ARGUMENT?
-  data_lines <- data_lines[!data_lines %in% remark_lines]
+  if (length(remark_lines) != 0) {
+    data_lines <- data_lines[!data_lines %in% remark_lines]
+  }
   data <- readr::read_tsv(data_lines, col_names = FALSE)
   data <- data[, cols_to_keep]
   data <- as.data.frame(data)
@@ -201,7 +205,11 @@ validate_licor <- function (x) {
     test_unit[i] <- class(values[[i]])
   }
   #increase strictness on units
-  if (!all(test_unit[test_unit != "character" & test_unit != "logical"] == "units")) {
+  if (!all(test_unit[test_unit != "character" &
+                     test_unit != "logical" &
+                     test_unit != "numeric" &
+                     test_unit != "hms" &
+                     test_unit != "POSIXct"] == "units")) {
     stop(
       "Data values do not have units!",
       call. = FALSE
@@ -245,5 +253,5 @@ validate_licor <- function (x) {
 #' @export
 
 licor <- function(file, deci = ".") {
-  validate_licor(new_licor(file, deci))
+  suppressWarnings(validate_licor(new_licor(file, deci)))
 }

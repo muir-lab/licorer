@@ -11,7 +11,7 @@
 #' @rdname subset
 #' @export
 
-subset <- function(x, vec) {
+licor_subset <- function(x, vec) {
   class(x) <- "data.frame"
   x[attr(attributes(x)$names, "data_type") == vec]
 }
@@ -51,4 +51,20 @@ subset_logic <- function(x, vec) {
 
 subset_options <- function(x) {
   unique(attr(attributes(x)$names, "data_type"))
+}
+
+#' Outputs options for subsetting
+#'
+#' @param x A licor object
+#'
+#' @return Returns the remarks present in the original file, if any.
+#'
+#' @examples \donttest{
+#'
+#' }
+#' @rdname get_remarks
+#' @export
+
+get_remarks(x) {
+
 }
