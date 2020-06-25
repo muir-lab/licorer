@@ -108,8 +108,8 @@ read_li6800_raw <- function(file, dec = ".") {
   data_lines <- data_lines[!data_lines %in% remark_lines]
   data <- readr::read_tsv(data_lines, col_names = FALSE)
   data <- data[, cols_to_keep]
-
   data <- as.data.frame(data)
+
   # Apply units to the data
   for (i in 1:ncol(data)) {
     if (nchar(unit_vector[i]) > 0) {
@@ -128,7 +128,8 @@ read_li6800_raw <- function(file, dec = ".") {
   licor_data <- structure(data, class = c("licor", "tbl_df", "tbl", "data.frame"))
 
   # Read in the external data into the class ----
-  external <- readr::read_delim(raw_lines, delim = "\n",  n_max = types_line - 3L) %>%
+  external <- readr::read_delim(raw_lines, delim = "\n",
+                                n_max = types_line - 3L) %>%
     unlist() %>%
     as.list()
 
