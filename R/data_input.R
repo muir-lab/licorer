@@ -1,96 +1,122 @@
-#' Reading in LiCor files
+#' Reads data from LI-6800 file and organizes it into class licor.
 #'
-#' @param x A file name for a licor data file
-#' @param deci Whether to set the decimal as a "." or a ","
+#' @inheritParams read.csv
 #'
 #' @return Returns a dataframe from raw LiCor files. Current support
 #' for LiCor 6800 files only. LiCor 6400 file reading will be supported
 #' in a later version.
-#' @importFrom utils read.csv
-#' @export
-#'
-#' @examples \donttest{
-#'
-#' }
-#' @rdname read_licors
-#' @export
-
-read_li6800 <- function(x, deci = ".") {
-  #Read in header information
-  header <- read.csv(file = x, header = TRUE, sep = "\t",
-                     skip = grep(pattern = "\\[Data\\]",
-                                      x = readLines(x),
-                                  value = FALSE) + 1,
-                     nrows = 1)
-  #Read in data information
-  data <- read.csv(file = x, header = FALSE, sep = "\t",
-                   skip = grep(pattern = "\\[Data\\]",
-                                     x = readLines(x),
-                                  value = FALSE) + 3, dec = deci)
-
-  #Add header to data
-  colnames(data) <- colnames(header)
-  #Return data
-  return(data)
-}
-
-
-#' Reads Data from raw LiCor files and organizes into class licor.
-#'
-#' @param filename The name of the file to read from
-#' @param deci Whether to set the decimal as a "." or a ","
-#'
-#' @return Returns an object of class licor from raw LiCor files. Current support
-#' for LiCor 6800 files only. LiCor 6400 file reading will be supported
-#' in a later version.
-#' @importFrom utils read.csv
-#' @export
 #'
 #' @examples \donttest{
 #' read_li6800_raw(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
 #' read_li6800_raw("/path/filename")
 #' }
-#' @rdname read_li6800_raw
+#'
+#' @rdname read_li6800
+#'
 #' @export
 
-read_li6800_raw <- function(filename, deci = ".") {
-  #read in types markers
-  types <- read.csv(file = filename, header = FALSE, sep = "\t",
-                     skip = grep(pattern = "\\[Data\\]",
-                                 x = readLines(filename),
-                                 value = FALSE),
-                     nrows = 1)
-  types <- unitarray <- as.vector(unlist(types))
+read_li6800 <- function(file, dec = ".") {
 
-  #Read in header information
-  header <- read.csv(file = filename, header = TRUE, sep = "\t",
-                     skip = grep(pattern = "\\[Data\\]",
-                                 x = readLines(filename),
-                                 value = FALSE) + 1,
-                     nrows = 1)
-  #read in and format units
-  read_units <- read.csv(file = filename, header = FALSE, sep = "\t",
-                     skip = grep(pattern = "\\[Data\\]",
-                                 x = readLines(filename),
-                                 value = FALSE) + 2,
-                     nrows = 1)
-  unitarray <- as.vector(unlist(read_units))
+  # Check file exists
+  checkmate::assert_file_exists(file)
 
-  fixed <- gsub("⁻([¹,²,³,⁴,⁵,⁶,⁷,⁸,⁹]*)", "^-\\1)", unitarray)
-  fixed <- chartr("¹²³⁴⁵⁶⁷⁸⁹", "123456789", fixed)
-  fixed <- gsub(" ", " * (", fixed)
-  fixed <- gsub("^(?=.*\\))((?!.*\\())", "\\(\\1", fixed, perl = TRUE)
+  # Check delim argument
+  dec <- match.arg(dec, c(".", ","))
 
-  #Read in data information
-  data <- read.csv(file = filename, header = FALSE, sep = "\t",
-                   skip = grep(pattern = "\\[Data\\]",
-                               x = readLines(filename),
-                               value = FALSE) + 3, dec = deci)
+  # Determine if x is raw or excel
+  if (stringr::str_detect(file, ".xlsx$")) {
+    licor_data <- read_li6800_excel(file, dec)
+  } else {
+    licor_data <- read_li6800_raw(file, dec)
+  }
 
-  #apply units to the data
+  #Return data
+  return(licor_data)
+
+}
+
+
+#' Reads data from Excel LI-6800 files and organizes into class licor.
+#'
+#' @inheritParams read_li6800
+#'
+#' @rdname read_li6800
+#'
+#' @export
+read_li6800_excel <- function(file, dec = ".") {
+
+  stop("Reading excel files exported from LI-6800 is not supported yet. Use raw files.")
+
+}
+
+
+#' Reads data from raw LI-6800 files and organizes into class licor.
+#'
+#' @inheritParams read_li6800
+#'
+#' @return Returns an object of class licor from raw LI-6800 files. Current
+#' support for LI-6800 files only. LI-6400 file reading will be supported
+#' in a later version.
+#'
+#' @rdname read_li6800
+#'
+#' @export
+
+read_li6800_raw <- function(file, dec = ".") {
+
+  raw_lines <- readLines(file)
+
+  # Read in types markers ----
+  types_line <- 1L + grep(pattern = "\\[Data\\]", x = raw_lines,
+                          value = FALSE)
+  checkmate::assert_integer(types_line, len = 1L)
+
+  types <- unlist(stringr::str_split(raw_lines[types_line], pattern = "\t"))
+
+  # Drop columns without a type
+  cols_to_drop <- nchar(types) == 0
+  if (any(cols_to_drop) > 0) {
+    message(paste("Column(s)", which(cols_to_drop), "appear to be empty. Dropping."))
+    cols_to_keep <- seq_len(length(types))[!cols_to_drop]
+    types <- types[cols_to_keep]
+  } else {
+    cols_to_keep <- seq_len(length(types))
+  }
+
+  checkmate::assert_names(types, subset.of = acceptable_types())
+
+  # Read in header information ----
+  # header <- utils::read.csv(
+  #   file = file,
+  #   header = TRUE,
+  #   sep = "\t",
+  #   skip = 1L + grep(
+  #     pattern = "\\[Data\\]",
+  #     x = raw_lines,
+  #     value = FALSE
+  #   ),
+  #   nrows = 1L
+  # )
+
+  # Read in and format units ----
+  unit_vector <- unlist(stringr::str_split(raw_lines[types_line + 2L], pattern = "\t"))[cols_to_keep]
+  unit_vector <- unit_vector %>%
+    gsub("⁻([¹,²,³,⁴,⁵,⁶,⁷,⁸,⁹]*)", "^-\\1)", x = .) %>%
+    chartr("¹²³⁴⁵⁶⁷⁸⁹", "123456789", x = .) %>%
+    gsub(" ", " * (", x = .) %>%
+    gsub("^(?=.*\\))((?!.*\\())", "\\(\\1", x = ., perl = TRUE)
+
+  # Read in remarks ----
+
+  # Read in data information ----
+  # NEED TO INCLUDE DECIMAL ARGUMENT?
+  data <- readr::read_tsv(raw_lines, col_names = FALSE, skip = types_line + 2L)
+  data <- data[, cols_to_keep]
+
+  # Apply units to the data
   for (i in 1:ncol(data)) {
-    if (!is.na(fixed[i])) {
-      units(data[,i]) <- fixed[i]
+    if (!is.na(unit_vector[i])) {
+      units(data[,i]) <- unit_vector[i]
     }
   }
 
@@ -104,7 +130,7 @@ read_li6800_raw <- function(filename, deci = ".") {
   licor_data <- structure(data, class = c("licor", "data.frame"))
 
   #Load in the external data into the class
-  external <- read.csv(file = filename, header = TRUE, sep = "\n", nrows = 50)
+  external <- read.csv(file = file, header = TRUE, sep = "\n", nrows = 50)
   external <- as.list(unlist(external))
   temp <- str_extract(external, ".*(?=\\t)")
   external <- gsub(".*\\t", "", external, perl = TRUE)
@@ -119,7 +145,7 @@ read_li6800_raw <- function(filename, deci = ".") {
     if (!subset_logic(licor_data, c("Sys", "UserDefVar"))[i]) {
       if (is.na(fixed[i]) & (class(licor_data[,i]) == "numeric" |
                              class(licor_data[,i]) == "integer")) {
-        units(licor_data[,i]) <- unitless
+        units(licor_data[,i]) <- units::unitless
       }
     } else if (is.na(fixed[i]) & (class(licor_data[,i]) == "numeric" |
                                   class(licor_data[,i]) == "integer")) {
@@ -133,7 +159,7 @@ read_li6800_raw <- function(filename, deci = ".") {
 
 #' Constructor for class licor.
 #'
-#' @param filename The name of the file to read from
+#' @param file The name of the file to read from
 #' @param deci Whether to set the decimal as a "." or a ","
 #'
 #' @return Object of class licor
@@ -147,8 +173,8 @@ read_li6800_raw <- function(filename, deci = ".") {
 #' @rdname new_licor
 #' @export
 
-new_licor <- function(filename, deci = ".") {
-  read_li6800_raw(filename, deci)
+new_licor <- function(file, deci = ".") {
+  read_li6800_raw(file, deci)
 }
 
 #' Validator for class licor.
@@ -198,7 +224,7 @@ validate_licor <- function (x) {
 
 #' Helper for class licor. Creates licor class objects.
 #'
-#' @param filename The name of the licor raw file to read.
+#' @param file The name of the licor raw file to read.
 #' @param deci Wheter the decimal is "." or ","
 #'
 #' @return Returns an object of class licor, checked for correctness. Supports
@@ -215,6 +241,6 @@ validate_licor <- function (x) {
 #' @rdname licor
 #' @export
 
-licor <- function(filename, deci = ".") {
-  validate_licor(new_licor(filename, deci))
+licor <- function(file, deci = ".") {
+  validate_licor(new_licor(file, deci))
 }
