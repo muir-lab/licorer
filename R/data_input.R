@@ -127,6 +127,11 @@ read_li6800_raw <- function(file, dec = ".") {
   # Add data type/source to the columns
   attr(attributes(data)$names, "data_type") <- types
 
+  # Add remarks if there are any
+  if (exists("remarks")) {
+    attr(data, "remarks") <- remarks
+  }
+
   # Create the class
   licor_data <- structure(data, class = c("licor", "tbl_df", "tbl", "data.frame"))
 

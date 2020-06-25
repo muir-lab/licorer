@@ -55,11 +55,12 @@ subset_options <- function(x) {
   unique(attr(attributes(x)$names, "data_type"))
 }
 
-#' Outputs options for subsetting
+#' Gets remarks attached to data, if any.
 #'
 #' @param x A licor object
 #'
-#' @return Returns the remarks present in the original file, if any.
+#' @return Returns the remarks present in the original file, if any, or null
+#' if none exist.
 #'
 #' @examples \donttest{
 #'
@@ -68,5 +69,5 @@ subset_options <- function(x) {
 #' @export
 
 get_remarks <- function(x) {
-  cat("Not implemented yet.")
+  attributes(x)$remarks
 }

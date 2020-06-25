@@ -2,7 +2,7 @@
 % Please edit documentation in R/data_process.R
 \name{get_remarks}
 \alias{get_remarks}
-\title{Outputs options for subsetting}
+\title{Gets remarks attached to data, if any.}
 \usage{
 get_remarks(x)
 }
@@ -10,10 +10,11 @@ get_remarks(x)
 \item{x}{A licor object}
 }
 \value{
-Returns the remarks present in the original file, if any.
+Returns the remarks present in the original file, if any, or null
+if none exist.
 }
 \description{
-Outputs options for subsetting
+Gets remarks attached to data, if any.
 }
 \examples{
 \donttest{
