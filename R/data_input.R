@@ -43,9 +43,14 @@ read_li6800 <- function(file, dec = ".") {
 #'
 #' @export
 read_li6800_excel <- function(file, dec = ".") {
-  readxl::read_excel(file)
-  stop("Reading excel files exported from LI-6800 is not supported yet. Use raw files.")
-
+  names <- as.vector(readxl::read_excel(file, sheet = "Measurements",
+                                        range = readxl::cell_rows(15),
+                                        col_names = FALSE))
+  data <- readxl::read_excel(file, sheet = "Measurements",
+                             range = readxl::cell_limits(c(17, 1), c(NA, NA)),
+                             col_names = FALSE)
+  colnames(data) <- names
+  data
 }
 
 
@@ -163,6 +168,17 @@ read_li6800_raw <- function(file, dec = ".") {
     }
   }
 
+  # Fix Duplicate Names
+  dupe_name <- names(licor_data[duplicated(names(licor_data)) |
+             duplicated(names(licor_data), fromLast = TRUE)])
+
+  modifier <- attr(attributes(licor_data)$names, "data_type")[duplicated(names(licor_data)) |
+                                            duplicated(names(licor_data), fromLast = TRUE)]
+
+  dupe_name <-  paste(dupe_name, type_mod, sep = "_")
+
+  attr(licor_data, "names")[duplicated(names(licor_data)) |
+                             duplicated(names(licor_data), fromLast = TRUE)] <- dupe_name
   # Return the class
   return(licor_data)
 
