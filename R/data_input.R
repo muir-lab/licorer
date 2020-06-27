@@ -233,6 +233,26 @@ validate_licor <- function (x) {
       call. = FALSE
     )
   }
+
+  #ensure units make sense for the variable.
+  for (i in 1:length(values)) {
+    if(test_unit[i] == "units") {
+      unit_types[i] <- units::deparse_unit(values[[i]])
+    } else {
+      unit_types[i] <- NA
+    }
+  }
+  names(unit_types) <- names(values)
+
+  for (y in 1:length(unit_types)) {
+    if(!is.na(unit_types[y])) {
+      true[y] = unit_types[y] == acceptable_units()[names(unit_types)[y]]
+      if (is.na(true[y])) {
+        true[y] = unit_types[y] == ""
+      }
+    }
+  }
+
   #ensure header is correct
   head_attrib <- attributes(values)$header
   if (class(head_attrib) != "list" | length(head_attrib) < 50) {
