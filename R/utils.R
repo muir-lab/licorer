@@ -32,7 +32,7 @@ acceptable_units <- function() {
     "Qabs" = ("µmol m-2 s-1"), "convert" = ("J µmol-1"), "P2_DQDT" = ("mol m-2 s-1"),
     "PHASE1_DURATION" = ("ms"), "PHASE2_DURATION" = ("ms"), "PHASE3_DURATION" = ("ms"),
     "QMAX" = ("µmol m-2 s-1"), "co2_adj" = ("µmol mol-1"), "co2_at" = ("µmol mol-1"),
-    "co2_cv" = ("%"), "h2o_adj" = ("µmol mol-1"), "h2o_at" = ("µmol mol-1"), "h2o_cv" = ("%"),
+    "co2_cv" = ("%"), "h2o_adj" = ("mmol mol-1"), "h2o_at" = ("mmol mol-1"), "h2o_cv" = ("%"),
     "time_Match" = ("s"), "co2_at" = ("µmol mol-1"), "CO2_r" = ("µmol mol-1"),
     "CO2_s" = ("µmol mol-1"), "Fan_speed" = ("rpm"), "Flow" = ("µmol s-1"),
     "H2O_r" = ("mmol mol-1"), "H2O_s" = ("mmol mol-1"), "PPFD_in" = ("mol m-2 s-1"),
@@ -73,7 +73,34 @@ acceptable_units <- function() {
     "P1_Qmax" = ("µmol m-2 s-1"), "P2_dQdt" = ("mol m-2 s-2"), "TIME_Meas" = ("s"),
     "Pa" = ("kPa"), "ΔPcham" = ("kPa"), "Tair" = ("°C"), "Offset" = ("°C"),
     "Offset2" = ("°C"), "Qamb_in" = ("µmol m-2 s-1"), "Qamb_out" = ("µmol m-2 s-1"),
-    "Q" = ("µmol m-2 s-1"), "H2O_r_sp" = ("mmol mol-1")
-    )
+    "Q" = ("µmol m-2 s-1"), "H2O_r_sp" = ("mmol mol-1"), "Q_modavg" = ("µmol m-2 s-1"),
+    "Tled" = ("°C"), "TDigital" = ("°C"), "TPreamp" = ("°C"), "TPwrSpy" = ("°C"),
+    "TDrive" = ("°C"), "Q_red" = ("µmol m-2 s-1"), "Q_blue" = ("µmol m-2 s-1"),
+    "Q_farred" = ("µmol m-2 s-1"), "TSPF" = ("s"), "ΔCO2:MN" = ("µmol mol-1"),
+    "ΔCO2:SLP" = ("µmol min-1 mol-1"), "ΔCO2:SD" = ("µmol mol-1"), "F:SLP" = ("min-1"),
+    "ΔH2O:MN" = ("mmol mol-1"), "ΔH2O:SLP" = ("mmol min-1 mol-1"), "ΔH2O:SD" = ("mmol mol-1"),
+    "DAC_1" = ("V"), "DAC_2" = ("V"), "DAC_3" = ("V"), "DAC_4" = ("V"), "AuxPower" = ("V"),
+    "MatchValveR" = ("%"), "MatchValveS" = ("%"), "Tirga" = ("°C"), "Ts" = ("°C"),
+    "Tr" = ("°C"), "CO2_%" = ("%"), "Desiccant_%" = ("%"), "Humidifier_%" = ("%"),
+    "Txchg_sp" = ("°C"), "CO2_r_sp" = ("µmol mol-1"), "SS_s" = ("%"), "SS_r" = ("%"),
+    "blfa_1" = (""), "blfa_2" = (""), "blfa_3" = (""), "CorrFact" = (""), "alpha" = (""),
+    "K" = (""), "F" = (""), "F_dc" = (""), "Pc" = (""), "F_avg" = (""),
+    "F_dc_avg" = (""), "count" = (""), "ΔCO2:OK" = (""), "Stable" = (""), "Total" = (""),
+    "f_farred" = (""), "F:MN" = (""), "F:SD" = (""), "F:OK" = (""), "ΔH2O:OK" = (""),
+    "GPIO" = (""), "DIAG" = (""), "Geometry" = (""))
 
+}
+
+#' Get lookup table of acceptable varible types for classes other than "units"
+#'
+#' @examples
+#' acceptable_types()
+#'
+#' @export
+acceptable_nonunits <- function() {
+  c("obs" = "numeric", "elapsed" = "character", "date" =  "POSIXct", "hhmmss_Sys" = "hms",
+    "binomial" = "logical", "leaf_id" = "logical", "Geometry" = "character",
+    "hhmmss_Match" = "character", "State" = "character", "GPIO_dir" = "character",
+    "excit_5v" = "character", "power_12v" = "character", "power_5v" = "character",
+    "ch1_pullup" = "character")
 }

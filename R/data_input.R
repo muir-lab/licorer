@@ -244,13 +244,23 @@ validate_licor <- function (x) {
   }
   names(unit_types) <- names(values)
 
-  for (y in 1:length(unit_types)) {
-    if(!is.na(unit_types[y])) {
-      true[y] = unit_types[y] == acceptable_units()[names(unit_types)[y]]
-      if (is.na(true[y])) {
-        true[y] = unit_types[y] == ""
-      }
+  ##
+  err <- c()
+  for (y in 1:length(values)) {
+    if (!is.na(unit_types[y])) {
+      tryCatch({
+        units::set_units(values[[y]],
+                  units::as_units(acceptable_units()[attributes(values)$names[y]]),
+                  mode = "standard")
+      }, error = function(e) {
+          err <- c(err, cat("Error: expected type for: \"", attributes(test_data2)$names[y],
+                            "\" should be: \"", acceptable_units()[attributes(test_data2)$names[y]],
+                            "\" but got: \"", unit_types[y], "\"\n"))
+      })
     }
+  }
+  if (length(err) >= 1) {
+    stop(err)
   }
 
   #ensure header is correct
@@ -268,7 +278,7 @@ validate_licor <- function (x) {
       call. = FALSE
     )
   }
-  x
+  invisible(x)
 }
 
 #' Helper for class licor. Creates licor class objects.
