@@ -11,7 +11,7 @@ get_remarks(x)
 }
 \value{
 Returns the remarks present in the original file, if any, or null
-if none exist.
+if none exist. Remarks are listed with the row they come immediately before.
 }
 \description{
 Gets remarks attached to data, if any.

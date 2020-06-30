@@ -2,7 +2,7 @@
 #'
 #' @param x A licor object
 #' @param vec A vector of subset options, and can be any permutation of the
-#' options presented by the 'subset_options' function, for example, vec could
+#' options presented by the '\code{\link{subset_options}}' function, for example, vec could
 #' be 'c("Sys","GasEx")'
 #'
 #' @return Returns a data.frame with the subset of data specified
@@ -61,7 +61,7 @@ subset_options <- function(x) {
 #' @param x A licor object
 #'
 #' @return Returns the remarks present in the original file, if any, or null
-#' if none exist.
+#' if none exist. Remarks are listed with the row they come immediately before.
 #'
 #' @examples \donttest{
 #'
@@ -70,5 +70,16 @@ subset_options <- function(x) {
 #' @export
 
 get_remarks <- function(x) {
+  y <- c()
+  for (i in row(attributes(x)$remarks)) {
+    y[i] <- min(which(x$hhmmss_Sys > attributes(x)$remarks[[i, 1]]))
+  }
+  attributes(x)$remarks[3] <- y
+  for (i in row(attributes(x)$remarks)) {
+    y[i] <- max(which(x$hhmmss_Sys < attributes(x)$remarks[[i, 1]]))
+  }
+  attributes(x)$remarks[4] <- y
+  attributes(attributes(x)$remarks)$names[3] <- "Before row"
+  attributes(attributes(x)$remarks)$names[4] <- "After row"
   attributes(x)$remarks
 }

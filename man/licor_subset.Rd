@@ -10,7 +10,7 @@ licor_subset(x, vec)
 \item{x}{A licor object}
 
 \item{vec}{A vector of subset options, and can be any permutation of the
-options presented by the 'subset_options' function, for example, vec could
+options presented by the '\code{\link{subset_options}}' function, for example, vec could
 be 'c("Sys","GasEx")'}
 }
 \value{
