@@ -24,3 +24,6 @@ Creating a subset of the data
 
 }
 }
+\seealso{
+\code{\link{subset_options}}
+}

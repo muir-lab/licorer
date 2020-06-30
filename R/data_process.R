@@ -6,7 +6,7 @@
 #' be 'c("Sys","GasEx")'
 #'
 #' @return Returns a data.frame with the subset of data specified
-#'
+#' @seealso \code{\link{subset_options}}
 #' @examples \donttest{
 #'
 #' }
@@ -49,6 +49,7 @@ subset_logic <- function(x, vec) {
 #'
 #' }
 #' @rdname subset_options
+#'
 #' @export
 
 subset_options <- function(x) {

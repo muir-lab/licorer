@@ -43,14 +43,15 @@ read_li6800 <- function(file, dec = ".") {
 #'
 #' @export
 read_li6800_excel <- function(file, dec = ".") {
-  names <- as.vector(readxl::read_excel(file, sheet = "Measurements",
-                                        range = readxl::cell_rows(15),
-                                        col_names = FALSE))
-  data <- readxl::read_excel(file, sheet = "Measurements",
-                             range = readxl::cell_limits(c(17, 1), c(NA, NA)),
-                             col_names = FALSE)
-  colnames(data) <- names
-  data
+  #names <- as.vector(readxl::read_excel(file, sheet = "Measurements",
+  #                                      range = readxl::cell_rows(15),
+  #                                      col_names = FALSE))
+  #data <- readxl::read_excel(file, sheet = "Measurements",
+  #                           range = readxl::cell_limits(c(17, 1), c(NA, NA)),
+  #                           col_names = FALSE)
+  #colnames(data) <- names
+  #data
+  print("To be implemented in a future patch.")
 }
 
 
@@ -110,7 +111,6 @@ read_li6800_raw <- function(file, dec = ".") {
   }
 
   # Read in data information ----
-  # NEED TO INCLUDE DECIMAL ARGUMENT?
   if (length(remark_lines) != 0) {
     data_lines <- data_lines[!data_lines %in% remark_lines]
   }
@@ -220,7 +220,7 @@ validate_licor <- function (x) {
   values <- unclass(x)
   test_unit <- vector(length = length(values))
   for (i in 1:length(values)) {
-    test_unit[i] <- class(values[[i]])
+    suppressWarnings(test_unit[i] <- class(values[[i]]))
   }
   #increase strictness on units
   if (!all(test_unit[test_unit != "character" &
@@ -244,7 +244,7 @@ validate_licor <- function (x) {
   }
   names(unit_types) <- names(values)
 
-  ##
+  ## Produce errors for wrong values
   err <- c()
   for (y in 1:length(values)) {
     if (!is.na(unit_types[y])) {
