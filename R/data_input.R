@@ -255,7 +255,8 @@ validate_licor <- function (x) {
       }, error = function(e) {
           err <- c(err, cat("Error: expected type for: \"", attributes(test_data2)$names[y],
                             "\" should be: \"", acceptable_units()[attributes(test_data2)$names[y]],
-                            "\" but got: \"", unit_types[y], "\"\n"))
+                            "\" but got: \"", unit_types[y], "\"\n"), sep = "")
+          print(unit_types[y])
       })
     }
   }

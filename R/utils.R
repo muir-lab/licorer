@@ -21,8 +21,8 @@ acceptable_units <- function() {
 
   c("CustomBLC" = ("mol m-2 s-1"), "Oxygen" = ("%"), "S" = ("cm2"),
     "A_fs" = ("µmol m-2 s-1"), "Adark" = ("µmol m-2 s-1"), "ETR" = ("µmol m-2 s-1"),
-    "Qabs" = ("µmol m-2 s-1"), "f_blue" = ("µmol m-2 s-1"), "FARREDFRAC" = ("µmol m-2 s-1"),
-    "PFD" = ("µmol m-2 s-1"), "f_red" = ("µmol m-2 s-1"), "REDMODAVG" = ("µmol m-2 s-1"),
+    "Qabs" = ("µmol m-2 s-1"), "f_blue" = ("1"), "FARREDFRAC" = ("µmol m-2 s-1"),
+    "PFD" = ("µmol m-2 s-1"), "f_red" = ("1"), "REDMODAVG" = ("µmol m-2 s-1"),
     "dF/dt" = ("min-1"), "dF_dc/dt" = ("min-1"), "period" = ("s"), "A" = ("µmol m-2 s-1"),
     "Ci" = ("µmol mol-1"), "Ca" = ("µmol mol-1"), "E" = ("mol m-2 s-1"), "Pca" = ("Pa"),
     "Pci" = ("Pa"), "RHcham" = ("%"), "Rabs" = ("W m-2"), "SVPcham" = ("kPa"),
@@ -83,11 +83,15 @@ acceptable_units <- function() {
     "MatchValveR" = ("%"), "MatchValveS" = ("%"), "Tirga" = ("°C"), "Ts" = ("°C"),
     "Tr" = ("°C"), "CO2_%" = ("%"), "Desiccant_%" = ("%"), "Humidifier_%" = ("%"),
     "Txchg_sp" = ("°C"), "CO2_r_sp" = ("µmol mol-1"), "SS_s" = ("%"), "SS_r" = ("%"),
-    "blfa_1" = (""), "blfa_2" = (""), "blfa_3" = (""), "CorrFact" = (""), "alpha" = (""),
-    "K" = (""), "F" = (""), "F_dc" = (""), "Pc" = (""), "F_avg" = (""),
-    "F_dc_avg" = (""), "count" = (""), "ΔCO2:OK" = (""), "Stable" = (""), "Total" = (""),
-    "f_farred" = (""), "F:MN" = (""), "F:SD" = (""), "F:OK" = (""), "ΔH2O:OK" = (""),
-    "GPIO" = (""), "DIAG" = (""), "Geometry" = (""))
+    "blfa_1" = ("1"), "blfa_2" = ("1"), "blfa_3" = ("1"), "CorrFact" = ("1"), "alpha" = ("1"),
+    "K" = ("1"), "F" = ("1"), "F_dc" = ("1"), "Pc" = ("1"), "F_avg" = ("1"),
+    "F_dc_avg" = ("1"), "count" = ("1"), "ΔCO2:OK" = ("1"), "Stable" = ("1"), "Total" = ("1"),
+    "f_farred" = ("1"), "F:MN" = ("1"), "F:SD" = ("1"), "F:OK" = ("1"), "ΔH2O:OK" = ("1"),
+    "GPIO" = ("1"), "DIAG" = ("1"), "Geometry" = ("1"), "Fo" = ("1"), "Fm" = ("1"), "Fv" = ("1"),
+    "Fv/Fm" = ("1"), "Fs" = ("1"), "Fm'" = ("1"), "PhiPS2" = ("1"), "PS2/1" = ("1"),
+    "Fv'/Fm'" = ("1"), "NPQ" = ("1"), "Fo'" = ("1"), "Fv'" = ("1"), "qP" = ("1"),
+    "qN" = ("1"), "qP_Fo" = ("1"), "qN_Fo" = ("1"), "ID" = ("1"), "P1_Fmax" = ("1"),
+    "P3_ΔF" = ("1"))
 
 }
 
