@@ -98,13 +98,37 @@ acceptable_units <- function() {
 #' Get lookup table of acceptable varible types for classes other than "units"
 #'
 #' @examples
-#' acceptable_types()
+#' acceptable_nonunits()
 #'
 #' @export
+
 acceptable_nonunits <- function() {
   c("obs" = "numeric", "elapsed" = "character", "date" =  "POSIXct", "hhmmss_Sys" = "hms",
     "binomial" = "logical", "leaf_id" = "logical", "Geometry" = "character",
     "hhmmss_Match" = "character", "State" = "character", "GPIO_dir" = "character",
     "excit_5v" = "character", "power_12v" = "character", "power_5v" = "character",
-    "ch1_pullup" = "character")
+    "ch1_pullup" = "character", "DarkAdaptedID" = "character", "LightAdaptedID" = "character",
+    "DarkPulseID" = "character")
+}
+
+#' Get lookup table of acceptable header variables
+#'
+#' @examples
+#' acceptable_header()
+#'
+#' @export
+acceptable_header <- function() {
+  c("File opened", "Console s/n", "Console ver", "Scripts ver", "Head s/n","Head ver",
+    "Head cal", "Chamber type", "Chamber s/n", "Chamber rev", "Chamber cal",
+    "Fluorometer", "Flr. Version", "SysConst:AvgTime", "SysConst:Oxygen", "SysConst:Chamber",
+    "Const:CustomBLC", "LTConst:deltaTw", "LTConst:fT1", "LTConst:fT2", "LTConst:fTeb",
+    "LQConst:Leaf", "LQConst:Ambient", "LQConst:abs_ambient", "LQConst:abs_redLED",
+    "LQConst:abs_greenLED", "LQConst:abs_blueLED", "LQConst:abs_whiteLED",
+    "LQConst:abs_redFlr", "LQConst:abs_blueFlr", "LQConst:k_ambient", "LQConst:k_redLED",
+    "LQConst:k_greenLED", "LQConst:k_blueLED", "LQConst:k_whiteLED", "LQConst:k_redFlr",
+    "LQConst:k_blueFlr", "QConst:fQ_Amb_in", "QConst:fQ_Amb_out", "QConst:fQ_HeadLS",
+    "QConst:fQ_ConsoleLS", "QConst:fQ_Flr", "LeakConst:fan_a", "LeakConst:fan_b",
+    "LeakConst:fan_c", "LeakConst:fan_d", "LeakConst:Fs_meas", "LeakConst:Fs_true",
+    "LeakConst:leak_wt", "File opened", "ChType", "CustomBLC", "Geometry", "K", "Oxygen", "S")
+
 }

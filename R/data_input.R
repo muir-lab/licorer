@@ -253,27 +253,39 @@ validate_licor <- function (x) {
                   units::as_units(acceptable_units()[attributes(values)$names[y]]),
                   mode = "standard")
       }, error = function(e) {
-          err <- c(err, cat("Error: expected type for: \"", attributes(test_data2)$names[y],
-                            "\" should be: \"", acceptable_units()[attributes(test_data2)$names[y]],
+          err <- c(err, cat("Error: expected type for: \"", attributes(values)$names[y],
+                            "\" should be: \"", acceptable_units()[attributes(values)$names[y]],
                             "\" but got: \"", unit_types[y], "\"\n"), sep = "")
-          print(unit_types[y])
+          print("R lookup tabes somtimes do not produce correct resuts. If: \"", unit_types[y],
+                "\" does not match the above vatiable, it is not in the lookup table.")
       })
+    } else {
+        if (test_unit[y] != acceptable_nonunits()[attributes(values)$names[y]]) {
+          err <- c(err, cat("Error: expected class for: \"", attributes(values)$names[y],
+                            "\" should be: \"", acceptable_nonunits()[test_unit[y]],
+                            "\" but got: \"", test_unit[y], "\"\n"), sep = "")
+        }
     }
   }
   if (length(err) >= 1) {
     stop(err)
   }
 
+
+
   #ensure header is correct
   head_attrib <- attributes(values)$header
-  if (class(head_attrib) != "list" | length(head_attrib) < 50) {
+  if (class(head_attrib) != "list" |
+      suppressWarnings(
+        sum(attributes(attributes(values)$header)$names != acceptable_header()) >= 50)) {
     stop(
       "Header attributes missing!",
       call. = FALSE
     )
   }
+
   #ensure data columns have attribute
-  if (length(attr(attributes(fixed)$names, "data_type")) != length(attributes(fixed)$names)) {
+  if (length(attr(attributes(values)$names, "data_type")) != length(attributes(values)$names)) {
     stop(
       "One or more columns is missing a category assignment!",
       call. = FALSE
