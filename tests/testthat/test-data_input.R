@@ -32,6 +32,11 @@ test_that("Validator correctly identifies bad data", {
   expect_error(validate_licor(x))
 
   units(x[[2]]) <- "s"
-  attr(x, "header") <- NULL
+  attr(x, "header_data") <- NULL
+  expect_error(validate_licor(x))
+
+  x <- read_li6800_raw(system.file("extdata", "2019-05-06-0740_trillium_ovatum",
+                                   package = "licorer", mustWork = TRUE))
+  attr(attributes(x)$names, "data_type") <- NULL
   expect_error(validate_licor(x))
 })
