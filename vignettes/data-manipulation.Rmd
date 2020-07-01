@@ -16,9 +16,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-Being a child of the "data.frame" class, the "licor" class has inherited methods
-for performing operations on data and displaying the results, the "licorer" 
-package provides a few extra useful methods. We'll start with loading the data.
+This vignette will show you how to take subsets of LI-COR data using the **licorer** package.
+
+## Load packages and example data
 
 ```{r setup}
 library(licorer)
@@ -28,7 +28,14 @@ library(knitr)
 library(kableExtra)
 
 test_data <- licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
+
+inherits(test_data)
+
 ```
+
+Being a child of the "data.frame" class, the "licor" class has inherited methods
+for performing operations on data and displaying the results, the "licorer" 
+package provides a few extra useful methods. We'll start with loading the data.
 
 ## Creting a Subset of the Data
 
