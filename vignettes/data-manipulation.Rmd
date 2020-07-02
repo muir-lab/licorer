@@ -29,8 +29,6 @@ library(kableExtra)
 
 test_data <- licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
 
-inherits(test_data)
-
 ```
 
 Being a child of the "data.frame" class, the "licor" class has inherited methods
@@ -39,15 +37,15 @@ package provides a few extra useful methods. We'll start with loading the data.
 
 ## Creting a Subset of the Data
 
-There are two options for subsetting the data, "subset" and "subset_logic". The
-"subset" option takes the data and a vector of options to subset the data by (taken
+There are two options for subsetting the data, "licor_subset" and "subset_logic". The
+"licor_subset" option takes the data and a vector of options to subset the data by (taken
 from the "subset_options" function) and returns a data frame with only those variables.
 We'll show this with the "GasEx" option.
 
 ```{r}
 subset_options(test_data)
 
-scroll_box(knitr::kable(subset(test_data, "GasEx")[1:5, ]),
+scroll_box(knitr::kable(licor_subset(test_data, "GasEx")[1:5, ]),
             height = "250px", width = "700px", 
             box_css = "border: 1px solid #ddd; padding: 5px; ", 
             extra_css = NULL, fixed_thead = TRUE)

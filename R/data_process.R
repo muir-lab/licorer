@@ -70,6 +70,7 @@ subset_options <- function(x) {
 #' @export
 
 get_remarks <- function(x) {
+    y <- 0
     if (length(attributes(x)$remarks) >= 1) {
     for (i in row(attributes(x)$remarks)) {
       y[i] <- min(which(x$hhmmss_Sys > attributes(x)$remarks[[i, 1]]))
