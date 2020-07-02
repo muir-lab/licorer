@@ -1,5 +1,5 @@
 ---
-title: "Loading Data"
+title: "Reading raw LI-6800 files into R"
 author: "Daniel Trupp"
 date: "June 23, 2020"
 output: rmarkdown::html_vignette
@@ -16,11 +16,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-Loading data from raw LiCor files is designed to be streamlined in this package. 
-To load data from a licor 6800 file, use either the "read_li6800_raw" method or the
-"licor" method. The licor method is a more generalized method that validates the 
-licor object. Both of these options will create a "licor" object, which is a child
-of the data.frame class. We'll load in the data included with the licor package.
+The **licorer** package streamlines reading and validating data from raw LI-6800 files in *R*. To read a raw LI-6800 data file, use the `read_li6800_raw()` function. This will create a `licor` object, which is a child
+of the `data.frame` class. We'll load in the data included with the **licorer** package.
+
+<!-- CDM: Converting a data.frame into class licor is an advanced topic and I don't think we should recommend it, even if it's technically possible. -->
+<!-- "licor" method. The licor method is a more generalized method that validates the licor object. -->
+ 
 
 ```{r setup}
 library(licorer)
@@ -29,7 +30,16 @@ library(stringr)
 library(knitr)
 library(kableExtra)
 
+# CDM: is this the only way to access data. What about the utils::data() function rather than system.file()?
 test_data <- licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
+
+# CDM: Also show the syntax for read_li6800_raw(). It doesn't have to be run in this case, so use eval = FALSE (see code chunk below).
+```
+
+```{r, eval = TRUE, echo = FALSE}
+# CDM: You can also hide some code yet still execute it. Users don't really need to see code to make the table output
+
+# CDM: It also occurred to me that vignettes are usually available both as HTML and PDF. What does scroll_box() do in PDF?
 
 scroll_box(knitr::kable(test_data, caption = "Example"),
             height = "250px", width = "700px", 
@@ -37,25 +47,37 @@ scroll_box(knitr::kable(test_data, caption = "Example"),
             extra_css = NULL, fixed_thead = TRUE)
 ```
 
-As you can see, there is a lot of data. There are 330 rows and 146 columns.
-All of the data is either a character or has a unit (some have the "unitless" unit) 
-which are automatically assigned to them when the file is loaded. To make this easier to parse, rows fall into a few different categories which are stored as attributes to the row names. These are covered in greater detail in the vignette on data operations, but are given by the "subset_options" method.
+## The Data
+
+<!-- CDM: In RMarkdown, you can include inline R code to do calculate, like the line below. -->
+As you can see, there is a lot of data. There are `r nrow(test_data)` rows and `r ncol(test_data)` columns. 
+
+<!-- CDM: Comment about date and date-time classes -->
+<!-- CDM: Note that units are read from file. -->
+All of the data is either a character or has a unit (some have the "unitless" unit) which are automatically assigned and validated when the file is loaded. We'll discuss user-defined variables below.
+
+<!-- CDM: Can we link to other vignette? -->
+LI-COR groups variables into a few different categories which are stored as attributes of the data. This topic is covered in greater detail in the vignette on data operations and by the `subset_options()` function described below.
 
 ```{r}
 subset_options(test_data)
 ```
 
-The data columns covered by each of these values are expressly stated in the licor
-manual's "Summary of symbols" section.  In addition to data, the "licor" class stores meta-data from the header of the licor file. This information is accessible with the "header"attribute.
+The data columns covered by each of these values are expressly stated in the LI-6800 manual "Summary of symbols" section (CDM: provide page # and edition, v1.4 in this case).  
+
+## The Header
+
+In addition to data, the `licor` class stores meta-data from the header of the LI-6800 data file. This information is accessible with the `header` attribute.
 
 ```{r}
 attributes(test_data)$header[1:5]
 ```
 
 Once again we are showing a subset of the list, as the actual list of meta-data
-contains around 50 elements. There is a "licor_validator" that ensures that the 
-"licor" class was created correctly. It is automatically called during the "licor"
-mehtod call, but not during the "read_li6800_raw" method.
+contains around 50 elements. 
 
-Currently, the data reader only supports reading from licor 6800 files, but we 
-plan to add support for the licore 6400 as well.
+<!-- CDM: why isn't licor_validator called in read_li6800_raw?  -->
+The `licor_validator()` that ensures that the `licor` class was created correctly and that all variables have valid scientific units. It is automatically called during the `licor` method call, but not during the `read_li6800_raw()` method.
+
+Currently, the data reader only supports reading from LI-6800 files, but we 
+plan to add support for the LI-6400 as well.
