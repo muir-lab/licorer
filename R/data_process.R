@@ -70,16 +70,20 @@ subset_options <- function(x) {
 #' @export
 
 get_remarks <- function(x) {
-  y <- c()
-  for (i in row(attributes(x)$remarks)) {
-    y[i] <- min(which(x$hhmmss_Sys > attributes(x)$remarks[[i, 1]]))
-  }
-  attributes(x)$remarks[3] <- y
-  for (i in row(attributes(x)$remarks)) {
-    y[i] <- max(which(x$hhmmss_Sys < attributes(x)$remarks[[i, 1]]))
-  }
-  attributes(x)$remarks[4] <- y
-  attributes(attributes(x)$remarks)$names[3] <- "Before row"
-  attributes(attributes(x)$remarks)$names[4] <- "After row"
-  attributes(x)$remarks
+    y <- 0
+    if (length(attributes(x)$remarks) >= 1) {
+    for (i in row(attributes(x)$remarks)) {
+      y[i] <- min(which(x$hhmmss_Sys > attributes(x)$remarks[[i, 1]]))
+    }
+    attributes(x)$remarks[3] <- y
+    for (i in row(attributes(x)$remarks)) {
+      y[i] <- max(which(x$hhmmss_Sys < attributes(x)$remarks[[i, 1]]))
+    }
+    attributes(x)$remarks[4] <- y
+    attributes(attributes(x)$remarks)$names[3] <- "Before row"
+    attributes(attributes(x)$remarks)$names[4] <- "After row"
+    return(attributes(x)$remarks)
+    } else {
+      NULL
+    }
 }
