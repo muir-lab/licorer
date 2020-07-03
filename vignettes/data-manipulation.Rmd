@@ -31,15 +31,15 @@ test_data <- licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", pac
 
 ```
 
-Being a child of the "data.frame" class, the "licor" class has inherited methods
+Being a child of the "tibble" class, the "licor" class has inherited methods
 for performing operations on data and displaying the results, the "licorer" 
 package provides a few extra useful methods. We'll start with loading the data.
 
 ## Creting a Subset of the Data
 
-There are two options for subsetting the data, "licor_subset" and "subset_logic". The
-"licor_subset" option takes the data and a vector of options to subset the data by (taken
-from the "subset_options" function) and returns a data frame with only those variables.
+There are two options for subsetting the data, `licor_subset()` and `subset_logic()`. The
+`licor_subset()` option takes the data and a vector of options to subset the data by (taken
+from the "subset_options" function) and returns a tibble with only those variables.
 We'll show this with the "GasEx" option.
 
 ```{r}
@@ -52,10 +52,10 @@ scroll_box(knitr::kable(licor_subset(test_data, "GasEx")[1:5, ]),
 ```
 
 Once again we limit the size of the data shown to conserve space. This method is 
-data-destructive, as the returned data table is no longer a "licor" object and
+data-destructive, as the returned tibble is no longer a "licor" object and
 lacks the header data. It does, however, preserve units.
 
-The "subset_logic" function works similarly, except it returns a logical vector 
+The `subset_logic()` function works similarly, except it returns a logical vector 
 to apply to the columns. It is non-data-destructive, as it creates a boolean vector.
 This vetor is input in the column space to show the desired columns. We'll show
 this with the "Sys" and "FlrLS" options.
@@ -69,3 +69,13 @@ scroll_box(knitr::kable(test_data[1:5, subset_logic(test_data, choice_vec)]),
             extra_css = NULL, fixed_thead = TRUE)
 ```
 
+## Get remarks from datasets that have them
+
+Any remarks that are read in from the file are attached to the data as an attribute.
+The `get_remarks()` method will return a tibble of the remarks, and the lines before and after the remark was made.
+
+``` {r}
+test_data <- licor(system.file("extdata", "2020-06-23_ECT_hib", package = "licorer", mustWork = TRUE))
+
+get_remarks(test_data)
+```
