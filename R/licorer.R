@@ -1,4 +1,4 @@
-#' \code{photosynthesis} package
+#' \code{licorer} package
 #'
 #' Read and process LI-COR photosynthesis data files in R
 #'
