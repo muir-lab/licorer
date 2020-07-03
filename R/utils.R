@@ -117,6 +117,7 @@ acceptable_nonunits <- function() {
 #' acceptable_header()
 #'
 #' @export
+
 acceptable_header <- function() {
   c("File opened", "Console s/n", "Console ver", "Scripts ver", "Head s/n","Head ver",
     "Head cal", "Chamber type", "Chamber s/n", "Chamber rev", "Chamber cal",

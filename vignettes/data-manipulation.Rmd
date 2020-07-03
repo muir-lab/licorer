@@ -27,7 +27,8 @@ library(stringr)
 library(knitr)
 library(kableExtra)
 
-test_data <- licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
+test_data <- licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", 
+                               package = "licorer", mustWork = TRUE))
 
 ```
 
@@ -66,5 +67,11 @@ scroll_box(knitr::kable(test_data[1:5, subset_logic(test_data, choice_vec)]),
 Any remarks that are read in from the file are attached to the data as an attribute. The `get_remarks()` method will return a `tibble` of the remarks, and the lines before and after the remark was made.
 
 ``` {r}
+# Without Remarks
 get_remarks(test_data)
+
+# With Remarks
+get_remarks(licor(system.file("extdata", "2020-06-23_ECT_hib", 
+                               package = "licorer", mustWork = TRUE)))
+
 ```
