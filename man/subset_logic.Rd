@@ -18,8 +18,3 @@ on data without being destructive or duplicating unnecissarily.
 \description{
 Creates a boolean logical vector
 }
-\examples{
-\donttest{
-
-}
-}

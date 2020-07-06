@@ -2,10 +2,15 @@
 % Please edit documentation in R/remarks.R
 \name{is_remark}
 \alias{is_remark}
-\title{Detect remarks in LI-6800 raw data}
+\title{is_remark}
 \usage{
 is_remark(.s)
 }
+\arguments{
+\item{.s}{A string to be checked for remarks
+
+Detect remarks in LI-6800 raw data}
+}
 \description{
-Detect remarks in LI-6800 raw data
+is_remark
 }

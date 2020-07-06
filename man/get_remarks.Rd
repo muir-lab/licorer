@@ -17,7 +17,7 @@ if none exist. Remarks are listed with the row they come immediately before.
 Gets remarks attached to data, if any.
 }
 \examples{
-\donttest{
-
+\dontrun{
+ remarks <- get_remarks(licor_data)
 }
 }

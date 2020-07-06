@@ -16,7 +16,7 @@ x
 Validator for class licor.
 }
 \examples{
-\donttest{
+\dontrun{
 validate_licor(licor_object)
 }
 }

@@ -3,7 +3,7 @@
 \docType{package}
 \name{licorer}
 \alias{licorer}
-\title{\code{photosynthesis} package}
+\title{\code{licorer} package}
 \description{
 Read and process LI-COR photosynthesis data files in R
 }

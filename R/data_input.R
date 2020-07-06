@@ -1,12 +1,15 @@
 #' Reads data from LI-6800 file and organizes it into class licor.
 #'
+#' @param file The name of the file to read from
+#' @param dec Whether to set the decimal as a "." or a ","
 #'
 #' @return Returns a dataframe from raw LiCor files. Current support
 #' for LiCor 6800 files only. LiCor 6400 file reading will be supported
 #' in a later version.
 #'
-#' @examples \donttest{
-#' read_li6800_raw(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
+#' @examples \dontrun{
+#' read_li6800_raw(system.file("extdata", "2019-05-06-0740_trillium_ovatum",
+#'                             package = "licorer", mustWork = TRUE))
 #' read_li6800_raw("/path/filename")
 #' }
 #'
@@ -39,7 +42,7 @@ read_li6800 <- function(file, dec = ".") {
 #'
 #' @inheritParams read_li6800
 #'
-#' @rdname read_li6800
+#' @rdname read_li6800_excel
 #'
 #' @export
 read_li6800_excel <- function(file, dec = ".") {
@@ -63,7 +66,7 @@ read_li6800_excel <- function(file, dec = ".") {
 #' support for LI-6800 files only. LI-6400 file reading will be supported
 #' in a later version.
 #'
-#' @rdname read_li6800
+#' @rdname read_li6800_raw
 #'
 #' @export
 
@@ -99,8 +102,8 @@ read_li6800_raw <- function(file, dec = ".") {
                                            pattern = "\t"))[cols_to_keep]
   unit_vector <- unit_vector %>%
     stringr::str_trim(side = "both") %>%
-    stringr::str_replace_all("⁻([¹,²,³,⁴,⁵,⁶,⁷,⁸,⁹]*)", "^-\\1") %>%
-    chartr("¹²³⁴⁵⁶⁷⁸⁹", "123456789", x = .) %>%
+    stringr::str_replace_all("\u207b([\u00b9,\u00b2,\u00b3,\u2074,\u2075,\u2076,\u2077,\u2078,\u2079]*)", "^-\\1") %>%
+    chartr("\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079", "123456789", x = .) %>%
     stringr::str_replace_all(" ", " * ")
 
   # Read in remarks ----
@@ -187,20 +190,23 @@ read_li6800_raw <- function(file, dec = ".") {
 #' Constructor for class licor.
 #'
 #' @param file The name of the file to read from
-#' @param deci Whether to set the decimal as a "." or a ","
+#' @param dec Whether to set the decimal as a "." or a ","
 #'
 #' @return Object of class licor
 #' @export
 #'
 #' @examples
-#' new_licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
+#' new_licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum",
+#'                       package = "licorer", mustWork = TRUE))
+#' @examples \dontrun{
 #' new_licor("/path/filename")
+#' }
 #'
 #' @rdname new_licor
 #' @export
 
-new_licor <- function(file, deci = ".") {
-  read_li6800_raw(file, deci)
+new_licor <- function(file, dec = ".") {
+  read_li6800_raw(file, dec)
 }
 
 #' Validator for class licor.
@@ -210,7 +216,7 @@ new_licor <- function(file, deci = ".") {
 #' @return x
 #' @export
 #'
-#' @examples \donttest{
+#' @examples \dontrun{
 #' validate_licor(licor_object)
 #' }
 #' @rdname validate_licor
@@ -298,7 +304,7 @@ validate_licor <- function (x) {
 #' Helper for class licor. Creates licor class objects.
 #'
 #' @param file The name of the licor raw file to read.
-#' @param deci Wheter the decimal is "." or ","
+#' @param dec Wheter the decimal is "." or ","
 #'
 #' @return Returns an object of class licor, checked for correctness. Supports
 #' 6800 files currently. Correct licor objects have units on their variables
@@ -306,13 +312,14 @@ validate_licor <- function (x) {
 #' @export
 #'
 #' @examples
-#' licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
-#' @examples \donttest{
+#' licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum",
+#'                   package = "licorer", mustWork = TRUE))
+#' @examples \dontrun{
 #' licor("/path/filename")
-#'}
+#' }
 #' @rdname licor
 #' @export
 
-licor <- function(file, deci = ".") {
-  suppressWarnings(validate_licor(new_licor(file, deci)))
+licor <- function(file, dec = ".") {
+  suppressWarnings(validate_licor(new_licor(file, dec)))
 }

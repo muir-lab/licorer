@@ -4,12 +4,12 @@
 \alias{licor}
 \title{Helper for class licor. Creates licor class objects.}
 \usage{
-licor(file, deci = ".")
+licor(file, dec = ".")
 }
 \arguments{
 \item{file}{The name of the licor raw file to read.}
 
-\item{deci}{Wheter the decimal is "." or ","}
+\item{dec}{Wheter the decimal is "." or ","}
 }
 \value{
 Returns an object of class licor, checked for correctness. Supports
@@ -20,8 +20,9 @@ and an attribute containg the data from the header of the file.
 Helper for class licor. Creates licor class objects.
 }
 \examples{
-licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
-\donttest{
+licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum",
+                  package = "licorer", mustWork = TRUE))
+\dontrun{
 licor("/path/filename")
 }
 }

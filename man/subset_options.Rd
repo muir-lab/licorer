@@ -17,7 +17,7 @@ using the subset function.
 Outputs options for subsetting
 }
 \examples{
-\donttest{
-
+\dontrun{
+   subset_options()
 }
 }

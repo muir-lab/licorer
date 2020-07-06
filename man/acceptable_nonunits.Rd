@@ -10,6 +10,6 @@ acceptable_nonunits()
 Get lookup table of acceptable varible types for classes other than "units"
 }
 \examples{
-acceptable_types()
+acceptable_nonunits()
 
 }

@@ -7,8 +7,8 @@
 #'
 #' @return Returns a data.frame with the subset of data specified
 #' @seealso \code{\link{subset_options}}
-#' @examples \donttest{
-#'
+#' @examples \dontrun{
+#'   dataframe <- licor_subset(licor_data, c("Sys", GasEx"))
 #' }
 #' @rdname licor_subset
 #' @export
@@ -27,8 +27,8 @@ licor_subset <- function(x, vec) {
 #' @return Returns a logical vector in order to subset/perform operations
 #' on data without being destructive or duplicating unnecissarily.
 #'
-#' @examples \donttest{
-#'
+#' @examples \dontrun{
+#'   logic_vector <- subset_logic(licor_data, c("Sys", GasEx"))
 #' }
 #' @rdname subset_logic
 #' @export
@@ -45,8 +45,8 @@ subset_logic <- function(x, vec) {
 #' @return Returns a vector of strings that can be used to subset the data
 #' using the subset function.
 #'
-#' @examples \donttest{
-#'
+#' @examples \dontrun{
+#'    subset_options()
 #' }
 #' @rdname subset_options
 #'
@@ -63,8 +63,8 @@ subset_options <- function(x) {
 #' @return Returns the remarks present in the original file, if any, or null
 #' if none exist. Remarks are listed with the row they come immediately before.
 #'
-#' @examples \donttest{
-#'
+#' @examples \dontrun{
+#'  remarks <- get_remarks(licor_data)
 #' }
 #' @rdname get_remarks
 #' @export

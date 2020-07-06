@@ -19,11 +19,6 @@ Returns a data.frame with the subset of data specified
 \description{
 Creating a subset of the data
 }
-\examples{
-\donttest{
-
-}
-}
 \seealso{
 \code{\link{subset_options}}
 }

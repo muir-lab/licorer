@@ -4,12 +4,12 @@
 \alias{new_licor}
 \title{Constructor for class licor.}
 \usage{
-new_licor(file, deci = ".")
+new_licor(file, dec = ".")
 }
 \arguments{
 \item{file}{The name of the file to read from}
 
-\item{deci}{Whether to set the decimal as a "." or a ","}
+\item{dec}{Whether to set the decimal as a "." or a ","}
 }
 \value{
 Object of class licor
@@ -18,7 +18,10 @@ Object of class licor
 Constructor for class licor.
 }
 \examples{
-new_licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", package = "licorer", mustWork = TRUE))
+new_licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum",
+                      package = "licorer", mustWork = TRUE))
+\dontrun{
 new_licor("/path/filename")
+}
 
 }
