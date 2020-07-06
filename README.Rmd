@@ -1,0 +1,68 @@
+---
+output: github_document
+pagetitle: README
+always_allow_html: true
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# licorer
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The licorer package is designed to aid in the reading and processing of licor data
+files. It uses the R package [**units**](https://CRAN.R-project.org/package=units) to ensure that values recorded with units have the correct units.
+
+## Get **licorer**
+
+from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("licorer")
+```
+
+or from GitHub:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("muir-lab/licorer")
+```
+
+and load 'licorer'
+
+```r
+library("licorer")
+```
+
+## Vignette
+
+```{r child = 'vignettes/loading-data.Rmd'}
+```
+
+## Contributors
+
+* [Daniel Trupp](https://github.com/DanielTrupp)
+* [Chris Muir](https://github.com/cdmuir)
+
+## Comments and contributions
+
+Comments, criticisms, and contributions are welcomed!
+GitHub issues are the preferred way to report bugs, ask questions, or request 
+new features.
+You can submit issues here:
+https://github.com/muir-lab/licorer/issues
+
+## Meta
+
+* Please [report any issues or bugs](https://github.com/muir-lab/licorer/issues)
+* License: MIT + file LICENSE

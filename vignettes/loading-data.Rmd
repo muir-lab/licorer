@@ -49,7 +49,7 @@ scroll_box(knitr::kable(test_data, caption = "Example"),
             extra_css = NULL, fixed_thead = TRUE)
 ```
 
-## The Data
+### The Data
 
 As you can see, there is a lot of data. There are `r nrow(test_data)` rows and `r ncol(test_data)` columns. 
 
@@ -63,7 +63,7 @@ subset_options(test_data)
 
 The data columns covered by each of these values are expressly stated in the LI-6800 manual "Summary of symbols" section (CDM: provide page # and edition, v1.4 in this case).  
 
-## The Header
+### The Header
 
 In addition to data, the `licor` class stores meta-data from the header of the LI-6800 data file. This information is accessible with the `header` attribute.
 

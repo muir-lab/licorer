@@ -34,7 +34,7 @@ test_data <- licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum",
 
 Being a child of the [`tibble`](https://tibble.tidyverse.org/) class, the `licor` class has inherited methods for performing operations on data and displaying the results, the **licorer** package provides a few extra useful methods that we'll demonstrate here.
 
-## Creting a Subset of the Data
+### Creting a Subset of the Data
 
 There are two options for subsetting the data, `licor_subset()` and `subset_logic()`. The `licor_subset()` function takes the data and a vector of options to subset the data by (taken from the `subset_options()` function) and returns a tibble with only those variables. We'll show this with the `"GasEx"` option.
 
@@ -62,7 +62,7 @@ scroll_box(knitr::kable(test_data[1:5, subset_logic(test_data, choice_vec)]),
             extra_css = NULL, fixed_thead = TRUE)
 ```
 
-## Get remarks from datasets that have them
+### Get remarks from datasets that have them
 
 Any remarks that are read in from the file are attached to the data as an attribute. The `get_remarks()` method will return a `tibble` of the remarks, and the lines before and after the remark was made.
 
