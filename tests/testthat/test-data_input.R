@@ -7,7 +7,7 @@ test_that("read_li6800_raw creates a licor object", {
   expect_equal(class(x), c("licor", "tbl_df", "tbl", "data.frame"))
 
   #Test reading in with a file path
-  x <- read_li6800_raw("~/licorer/inst/extdata/2019-05-06-0740_trillium_ovatum")
+  x <- read_li6800_raw("inst/extdata/2019-05-06-0740_trillium_ovatum")
   expect_equal(class(x), c("licor", "tbl_df", "tbl", "data.frame"))
 })
 
