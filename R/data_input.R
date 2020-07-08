@@ -182,6 +182,19 @@ read_li6800_raw <- function(file, dec = ".") {
 
   attr(licor_data, "names")[duplicated(names(licor_data)) |
                              duplicated(names(licor_data), fromLast = TRUE)] <- dupe_name
+
+  # Fix missing time values
+  rep <- vector("list", length(grep("hhmmss", colnames(licor_data), value = TRUE)))
+  for (i in 1:length(rep)) {
+    rep[[i]] <- "--:--:--"
+  }
+  attributes(rep)$names <- grep("hhmmss", colnames(licor_data), value = TRUE)
+  licor_data <- naniar::replace_with_na(licor_data, replace = rep)
+  hms_change <- grep("hhmmss", colnames(licor_data)[colSums(is.na(licor_data)) > 0], value = TRUE)
+  for (y in hms_change) {
+    class(licor_data[[y]]) <- "hms"
+  }
+
   # Return the class
   return(licor_data)
 
@@ -254,7 +267,9 @@ validate_licor <- function (x) {
   ## Produce errors for wrong values
   err <- c()
   for (y in 1:length(values)) {
-    if (!is.na(unit_types[y])) {
+    if ((attr(attributes(values)$names, "data_type")[y] != "UserDefCon" &
+         attr(attributes(values)$names, "data_type")[y] != "UserDefVar") &
+        !is.na(unit_types[y])) {
       tryCatch({
         units::set_units(values[[y]],
                   units::as_units(acceptable_units()[attributes(values)$names[y]]),
@@ -263,13 +278,16 @@ validate_licor <- function (x) {
           err <- c(err, cat("Error: expected type for: \"", attributes(values)$names[y],
                             "\" should be: \"", acceptable_units()[attributes(values)$names[y]],
                             "\" but got: \"", unit_types[y], "\"\n"), sep = "")
-          print("R lookup tabes somtimes do not produce correct resuts. If: \"", unit_types[y],
-                "\" does not match the above vatiable, it is not in the lookup table.")
+          cat("R lookup tabes somtimes do not produce correct resuts. If: \"",
+              attributes(values)$names[y],
+                "\" does not match \n the above vatiable, it is not in the lookup table.\n")
       })
     } else {
-        if (test_unit[y] != acceptable_nonunits()[attributes(values)$names[y]]) {
+        if ((attr(attributes(values)$names, "data_type")[y] != "UserDefCon" &
+             attr(attributes(values)$names, "data_type")[y] != "UserDefVar") &
+            test_unit[y] != acceptable_nonunits()[attributes(values)$names[y]] ) {
           err <- c(err, cat("Error: expected class for: \"", attributes(values)$names[y],
-                            "\" should be: \"", acceptable_nonunits()[test_unit[y]],
+                            "\" should be: \"", acceptable_nonunits()[attributes(values)$names[y]],
                             "\" but got: \"", test_unit[y], "\"\n"), sep = "")
         }
     }
@@ -284,7 +302,8 @@ validate_licor <- function (x) {
   head_attrib <- attributes(values)$header
   if (class(head_attrib) != "list" |
       suppressWarnings(
-        sum(attributes(attributes(values)$header)$names != acceptable_header()) >= 50)) {
+        sum(attributes(attributes(values)$header)$names != acceptable_header()) <
+            length(acceptable_header()) - 13)) {
     stop(
       "Header attributes missing!",
       call. = FALSE

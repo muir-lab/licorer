@@ -7,7 +7,8 @@
 acceptable_types <- function() {
 
   c("Auxiliary", "Const", "FLR",   "FlrLS", "FlrStats", "GasEx", "LeafQ", "Leak",  "Match",
-    "Meas",  "MPF", "Stability", "Status", "Sys", "UserDefVar")
+    "MchEvent", "MchStatus", "Meas",  "MPF", "Stability", "Status", "Sys", "UserDefCon",
+    "UserDefVar")
 
 }
 
@@ -91,7 +92,13 @@ acceptable_units <- function() {
     "Fv/Fm" = ("1"), "Fs" = ("1"), "Fm'" = ("1"), "PhiPS2" = ("1"), "PS2/1" = ("1"),
     "Fv'/Fm'" = ("1"), "NPQ" = ("1"), "Fo'" = ("1"), "Fv'" = ("1"), "qP" = ("1"),
     "qN" = ("1"), "qP_Fo" = ("1"), "qN_Fo" = ("1"), "ID" = ("1"), "P1_Fmax" = ("1"),
-    "P3_\u0394F" = ("1"))
+    "P3_\u0394F" = ("1"), "Custom" = ("mol m-2 s-1"), "H2O_a" = ("mmol mol-1"),
+    "state" = ("1"), "time_MchEvent" = ("s"), "co2_t" = ("s"), "h2o_t" = ("s"),
+    "co2_match" = ("\u00b5mol mol-1"), "h2o_match" = ("mmol mol-1"), "cf_co2_a" = ("mmol mol-1"),
+    "cf_co2_b" = ("1"), "cf_co2_c" = ("1"), "cf_co2_d" = ("1"), "cf_h2o_a" = ("mmol mol-1"),
+    "cf_h2o_b" = ("1"), "cf_h2o_c" = ("1"), "cf_h2o_d" = ("1"), "co2_fit_low" = ("\u00b5mol mol-1"),
+    "co2_fit_high" = ("\u00b5mol mol-1"), "h2o_fit_low" = ("mmol mol-1"),
+    "h2o_fit_high" = ("mmol mol-1"), "co2_elapsed" = ("min"), "h2o_elapsed" = ("min"))
 
 }
 
@@ -105,10 +112,10 @@ acceptable_units <- function() {
 acceptable_nonunits <- function() {
   c("obs" = "numeric", "elapsed" = "character", "date" =  "POSIXct", "hhmmss_Sys" = "hms",
     "binomial" = "logical", "leaf_id" = "logical", "Geometry" = "character",
-    "hhmmss_Match" = "character", "State" = "character", "GPIO_dir" = "character",
+    "hhmmss_Match" = "hms", "State" = "character", "GPIO_dir" = "character",
     "excit_5v" = "character", "power_12v" = "character", "power_5v" = "character",
     "ch1_pullup" = "character", "DarkAdaptedID" = "character", "LightAdaptedID" = "character",
-    "DarkPulseID" = "character")
+    "DarkPulseID" = "character", "hhmmss_MchEvent" = "hms")
 }
 
 #' Get lookup table of acceptable header variables
