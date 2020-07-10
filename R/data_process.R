@@ -87,3 +87,40 @@ get_remarks <- function(x) {
       NULL
     }
 }
+
+#' Combines any number of licor files, in the order they are passed.
+#'
+#' @param combo A list of licor objects, to be combined
+#'
+#' @return Returns a licor composed of all the passed licor objects
+#'
+#' @examples \dontrun{
+#'  #nothing yet
+#' }
+#' @rdname combine_licor
+#' @export
+
+combine_licor <- function(combo) {
+  full <- combo[[1]]
+  for (i in 2:length(combo)) {
+    #make sure the data has the same amount of columns, fix if not
+    if (any(subset_options(full) !=  subset_options(combo[[i]]))) {
+      #make the columns the same
+      #Should this be implemented? or should the user only combine two with the
+      #same variables?
+    }
+
+    #combine the data
+    full <- rbind(full, combo[[i]])
+
+    #combine header datq
+    for (j in 1:length(attributes(full)$header_data)) {
+      #should they only be added if they are different, or just add new values
+      if (attributes(full)$header_data[[j]] != attributes(combo[[i]])$header_data[[j]]) {
+        attributes(full)$header_data[[j]] <-
+          append(attributes(full)$header_data[[j]], attributes(combo[[i]])$header_data[[j]])
+      }
+    }
+  }
+  invisible(full)
+}
