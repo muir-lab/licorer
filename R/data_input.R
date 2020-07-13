@@ -72,7 +72,7 @@ read_li6800_excel <- function(file, dec = ".") {
 
 read_li6800_raw <- function(file, dec = ".") {
 
-  raw_lines <- readLines(file)
+  raw_lines <- readLines(file, encoding = "UTF-8")
 
   # Read in types markers ----
   types_line <- 1L + grep(pattern = "\\[Data\\]", x = raw_lines,
