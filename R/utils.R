@@ -12,7 +12,7 @@ acceptable_types <- function() {
 
 }
 
-#' Get lookup table of acceptable units for data
+#' Get lookup table of acceptable units for data (delta altered)
 #'
 #' @examples
 #' acceptable_types()
