@@ -54,7 +54,7 @@ read_li6800_excel <- function(file, dec = ".") {
   #                           col_names = FALSE)
   #colnames(data) <- names
   #data
-  print("To be implemented in a future patch.")
+  print("licorer does not currently read excel files. This might change in future releases. Use the raw file instead.")
 }
 
 
@@ -75,8 +75,7 @@ read_li6800_raw <- function(file, dec = ".") {
   raw_lines <- readLines(file)
 
   # Read in types markers ----
-  types_line <- 1L + grep(pattern = "\\[Data\\]", x = raw_lines,
-                          value = FALSE)
+  types_line <- 1L + grep(pattern = "\\[Data\\]", x = raw_lines, value = FALSE)
   checkmate::assert_integer(types_line, len = 1L)
 
   types <- unlist(stringr::str_split(raw_lines[types_line], pattern = "\t"))

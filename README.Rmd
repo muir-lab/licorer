@@ -25,17 +25,17 @@ files. It uses the R package [**units**](https://CRAN.R-project.org/package=unit
 
 ## Get **licorer**
 
-from [CRAN](https://CRAN.R-project.org) with:
+<!-- from [CRAN](https://CRAN.R-project.org) with: -->
+
+<!-- ``` r -->
+<!-- install.packages("licorer") -->
+<!-- ``` -->
+
+from GitHub:
 
 ``` r
-install.packages("licorer")
-```
-
-or from GitHub:
-
-``` r
-# install.packages("devtools")
-devtools::install_github("muir-lab/licorer")
+# install.packages("remotes")
+remotes::install_github("muir-lab/licorer")
 ```
 
 and load 'licorer'
