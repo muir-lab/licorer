@@ -72,7 +72,9 @@ read_li6800_excel <- function(file, dec = ".") {
 
 read_li6800_raw <- function(file, dec = ".") {
 
-  raw_lines <- readLines(file)
+  fileprep(file)
+
+  raw_lines <- readLines(file, encoding = "UTF-8")
 
   # Read in types markers ----
   types_line <- 1L + grep(pattern = "\\[Data\\]", x = raw_lines,
@@ -341,4 +343,31 @@ validate_licor <- function (x) {
 
 licor <- function(file, dec = ".") {
   suppressWarnings(validate_licor(new_licor(file, dec)))
+}
+
+#' A preparation funtion to specially format files in windows
+#' For use only in windows macines, automatically called when reading in licor
+#' files.
+#'
+#' @param file The name of the licor raw file to read.
+#'
+#' @return Nothing is returned, but the file is modified.
+#' @export
+#'
+#' @rdname fileprep
+#' @export
+
+fileprep <- function(file) {
+
+  if (.Platform$OS.type == "windows") {
+    arg <- paste("((Get-Content",
+               file,
+               "-Encoding UTF8) -replace [char]916, '(delta)') | Set-Content",
+               file,
+               "-Encoding UTF8", sep = " ")
+    system2("powershell", args = arg, wait = TRUE)
+  } else {
+    arg <- c("-i", "''", "'s/'`printf '\xCE\x94'`'/(delta)/g'", file)
+    system2("sed", args = arg, wait = TRUE)
+  }
 }
