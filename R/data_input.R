@@ -362,6 +362,6 @@ fileprep <- function(file) {
              file,
              "-Encoding UTF8) -replace [char]916, '(delta)') | Set-Content",
              file,
-             "-Encoding UTF8")
+             "-Encoding UTF8", sep = " ")
   system2("powershell", args = arg)
 }
