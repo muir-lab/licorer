@@ -358,7 +358,7 @@ licor <- function(file, dec = ".") {
 #' @export
 
 fileprep <- function(file) {
-  arg <- cat("((Get-Content",
+  arg <- paste("((Get-Content",
              file,
              "-Encoding UTF8) -replace [char]916, '(delta)') | Set-Content",
              file,
