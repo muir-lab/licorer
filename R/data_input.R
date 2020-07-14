@@ -358,10 +358,16 @@ licor <- function(file, dec = ".") {
 #' @export
 
 fileprep <- function(file) {
-  arg <- paste("((Get-Content",
-             file,
-             "-Encoding UTF8) -replace [char]916, '(delta)') | Set-Content",
-             file,
-             "-Encoding UTF8", sep = " ")
-  system2("powershell", args = arg, wait = TRUE)
+
+  if (.Platform$OS.type == "windows") {
+    arg <- paste("((Get-Content",
+               file,
+               "-Encoding UTF8) -replace [char]916, '(delta)') | Set-Content",
+               file,
+               "-Encoding UTF8", sep = " ")
+    system2("powershell", args = arg, wait = TRUE)
+  } else {
+    arg <- c("-i", "''", "'s/'`printf '\xCE\x94'`'/(delta)/g'", file)
+    system2("sed", args = arg, wait = TRUE)
+  }
 }
