@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.com/muir-lab/licorer.svg?branch=master)](https://travis-ci.com/muir-lab/licorer)
 <!-- badges: end -->
 
 The licorer package is designed to aid in the reading and processing of
@@ -45,7 +47,7 @@ tibble data object with header data stored in attributes.
 ``` r
 library(licorer)
 #> Loading required package: units
-#> udunits system database from /usr/local/share/udunits
+#> udunits system database from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/units/share/udunits
 library(units)
 library(stringr)
 library(knitr)
@@ -54,6 +56,33 @@ library(kableExtra)
 # CDM: is this the only way to access data. What about the utils::data() function rather than system.file()?
 test_data <- licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", 
                                package = "licorer", mustWork = TRUE))
+#> Error: expected type for: " (delta)Pcham " should be: " NA " but got: " kPa "
+#> R lookup tabes somtimes do not produce correct resuts. If: " (delta)Pcham " does not match 
+#>  the above vatiable, it is not in the lookup table.
+#> Error: expected type for: " (delta)CO2:MN " should be: " NA " but got: " µmol mol-1 "
+#> R lookup tabes somtimes do not produce correct resuts. If: " (delta)CO2:MN " does not match 
+#>  the above vatiable, it is not in the lookup table.
+#> Error: expected type for: " (delta)CO2:SLP " should be: " NA " but got: " µmol min-1 mol-1 "
+#> R lookup tabes somtimes do not produce correct resuts. If: " (delta)CO2:SLP " does not match 
+#>  the above vatiable, it is not in the lookup table.
+#> Error: expected type for: " (delta)CO2:SD " should be: " NA " but got: " µmol mol-1 "
+#> R lookup tabes somtimes do not produce correct resuts. If: " (delta)CO2:SD " does not match 
+#>  the above vatiable, it is not in the lookup table.
+#> Error: expected type for: " (delta)CO2:OK " should be: " NA " but got: "  "
+#> R lookup tabes somtimes do not produce correct resuts. If: " (delta)CO2:OK " does not match 
+#>  the above vatiable, it is not in the lookup table.
+#> Error: expected type for: " (delta)H2O:MN " should be: " NA " but got: " mmol mol-1 "
+#> R lookup tabes somtimes do not produce correct resuts. If: " (delta)H2O:MN " does not match 
+#>  the above vatiable, it is not in the lookup table.
+#> Error: expected type for: " (delta)H2O:SLP " should be: " NA " but got: " mmol min-1 mol-1 "
+#> R lookup tabes somtimes do not produce correct resuts. If: " (delta)H2O:SLP " does not match 
+#>  the above vatiable, it is not in the lookup table.
+#> Error: expected type for: " (delta)H2O:SD " should be: " NA " but got: " mmol mol-1 "
+#> R lookup tabes somtimes do not produce correct resuts. If: " (delta)H2O:SD " does not match 
+#>  the above vatiable, it is not in the lookup table.
+#> Error: expected type for: " (delta)H2O:OK " should be: " NA " but got: "  "
+#> R lookup tabes somtimes do not produce correct resuts. If: " (delta)H2O:OK " does not match 
+#>  the above vatiable, it is not in the lookup table.
 ```
 
 ``` r
@@ -389,7 +418,7 @@ Pa
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔPcham
+(delta)Pcham
 
 </th>
 
@@ -629,25 +658,25 @@ h2o\_cv
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔCO2:MN
+(delta)CO2:MN
 
 </th>
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔCO2:SLP
+(delta)CO2:SLP
 
 </th>
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔCO2:SD
+(delta)CO2:SD
 
 </th>
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔCO2:OK
+(delta)CO2:OK
 
 </th>
 
@@ -677,25 +706,25 @@ F:OK
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔH2O:MN
+(delta)H2O:MN
 
 </th>
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔH2O:SLP
+(delta)H2O:SLP
 
 </th>
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔH2O:SD
+(delta)H2O:SD
 
 </th>
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔH2O:OK
+(delta)H2O:OK
 
 </th>
 
@@ -1465,7 +1494,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -2345,7 +2374,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -3225,7 +3254,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -4105,7 +4134,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -4985,7 +5014,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -5865,7 +5894,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -6745,7 +6774,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -7625,7 +7654,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -8505,7 +8534,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -9385,7 +9414,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -10265,7 +10294,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -11145,7 +11174,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -12025,7 +12054,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -12905,7 +12934,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -13785,7 +13814,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -14665,7 +14694,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -15545,7 +15574,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -16425,7 +16454,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -17305,7 +17334,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -18185,7 +18214,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -19065,7 +19094,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -19945,7 +19974,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -20825,7 +20854,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -21705,7 +21734,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -22585,7 +22614,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -23465,7 +23494,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -24345,7 +24374,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -25225,7 +25254,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -26105,7 +26134,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -26985,7 +27014,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -27865,7 +27894,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -28745,7 +28774,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -29625,7 +29654,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -30505,7 +30534,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -31385,7 +31414,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -32265,7 +32294,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -33145,7 +33174,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -34025,7 +34054,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -34905,7 +34934,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -35785,7 +35814,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -36665,7 +36694,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -37545,7 +37574,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -38425,7 +38454,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -39305,7 +39334,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -40185,7 +40214,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -41065,7 +41094,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -41945,7 +41974,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -42825,7 +42854,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -43705,7 +43734,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -44585,7 +44614,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -45465,7 +45494,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -46345,7 +46374,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -47225,7 +47254,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -48105,7 +48134,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -48985,7 +49014,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -49865,7 +49894,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -50745,7 +50774,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -51625,7 +51654,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -52505,7 +52534,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -53385,7 +53414,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -54265,7 +54294,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -55145,7 +55174,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -56025,7 +56054,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -56905,7 +56934,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -57785,7 +57814,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -58665,7 +58694,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -59545,7 +59574,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -60425,7 +60454,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -61305,7 +61334,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -62185,7 +62214,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -63065,7 +63094,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -63945,7 +63974,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -64825,7 +64854,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -65705,7 +65734,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -66585,7 +66614,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -67465,7 +67494,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -68345,7 +68374,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -69225,7 +69254,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -70105,7 +70134,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -70985,7 +71014,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -71865,7 +71894,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -72745,7 +72774,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -73625,7 +73654,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -74505,7 +74534,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -75385,7 +75414,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -76265,7 +76294,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -77145,7 +77174,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -78025,7 +78054,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -78905,7 +78934,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -79785,7 +79814,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -80665,7 +80694,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -81545,7 +81574,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -82425,7 +82454,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -83305,7 +83334,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -84185,7 +84214,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -85065,7 +85094,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -85945,7 +85974,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -86825,7 +86854,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -87705,7 +87734,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -88585,7 +88614,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -89465,7 +89494,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -90345,7 +90374,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -91225,7 +91254,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -92105,7 +92134,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -92985,7 +93014,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -93865,7 +93894,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -94745,7 +94774,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -95625,7 +95654,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -96505,7 +96534,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -97385,7 +97414,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -98265,7 +98294,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -99145,7 +99174,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -100025,7 +100054,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -100905,7 +100934,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -101785,7 +101814,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -102665,7 +102694,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -103545,7 +103574,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -104425,7 +104454,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -105305,7 +105334,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -106185,7 +106214,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -107065,7 +107094,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -107945,7 +107974,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -108825,7 +108854,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -109705,7 +109734,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -110585,7 +110614,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -111465,7 +111494,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -112345,7 +112374,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -113225,7 +113254,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -114105,7 +114134,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -114985,7 +115014,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -115865,7 +115894,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -116745,7 +116774,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -117625,7 +117654,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -118505,7 +118534,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -119385,7 +119414,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -120265,7 +120294,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -121145,7 +121174,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -122025,7 +122054,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -122905,7 +122934,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -123785,7 +123814,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -124665,7 +124694,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -125545,7 +125574,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -126425,7 +126454,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -127305,7 +127334,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -128185,7 +128214,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -129065,7 +129094,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -129945,7 +129974,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -130825,7 +130854,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -131705,7 +131734,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -132585,7 +132614,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -133465,7 +133494,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -134345,7 +134374,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -135225,7 +135254,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -136105,7 +136134,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -136985,7 +137014,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -137865,7 +137894,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -138745,7 +138774,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -139625,7 +139654,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -140505,7 +140534,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -141385,7 +141414,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -142265,7 +142294,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -143145,7 +143174,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -144025,7 +144054,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -144905,7 +144934,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -145785,7 +145814,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -146665,7 +146694,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -147545,7 +147574,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -148425,7 +148454,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -149305,7 +149334,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -150185,7 +150214,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -151065,7 +151094,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -151945,7 +151974,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -152825,7 +152854,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -153705,7 +153734,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -154585,7 +154614,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -155465,7 +155494,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -156345,7 +156374,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -157225,7 +157254,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -158105,7 +158134,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -158985,7 +159014,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -159865,7 +159894,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -160745,7 +160774,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -161625,7 +161654,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -162505,7 +162534,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -163385,7 +163414,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -164265,7 +164294,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -165145,7 +165174,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -166025,7 +166054,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -166905,7 +166934,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -167785,7 +167814,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -168665,7 +168694,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -169545,7 +169574,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -170425,7 +170454,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -171305,7 +171334,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -172185,7 +172214,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -173065,7 +173094,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -173945,7 +173974,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -174825,7 +174854,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -175705,7 +175734,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -176585,7 +176614,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -177465,7 +177494,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -178345,7 +178374,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -179225,7 +179254,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -180105,7 +180134,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -180985,7 +181014,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -181865,7 +181894,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -182745,7 +182774,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -183625,7 +183654,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -184505,7 +184534,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -185385,7 +185414,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -186265,7 +186294,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -187145,7 +187174,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -188025,7 +188054,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -188905,7 +188934,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -189785,7 +189814,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -190665,7 +190694,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -191545,7 +191574,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -192425,7 +192454,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -193305,7 +193334,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -194185,7 +194214,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -195065,7 +195094,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -195945,7 +195974,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -196825,7 +196854,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -197705,7 +197734,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -198585,7 +198614,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -199465,7 +199494,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -200345,7 +200374,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -201225,7 +201254,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -202105,7 +202134,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -202985,7 +203014,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -203865,7 +203894,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -204745,7 +204774,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -205625,7 +205654,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -206505,7 +206534,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -207385,7 +207414,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -208265,7 +208294,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -209145,7 +209174,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -210025,7 +210054,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -210905,7 +210934,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -211785,7 +211814,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -212665,7 +212694,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -213545,7 +213574,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -214425,7 +214454,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -215305,7 +215334,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -216185,7 +216214,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -217065,7 +217094,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -217945,7 +217974,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -218825,7 +218854,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -219705,7 +219734,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -220585,7 +220614,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -221465,7 +221494,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -222345,7 +222374,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -223225,7 +223254,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -224105,7 +224134,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -224985,7 +225014,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -225865,7 +225894,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -226745,7 +226774,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -227625,7 +227654,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -228505,7 +228534,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -229385,7 +229414,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -230265,7 +230294,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -231145,7 +231174,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -232025,7 +232054,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -232905,7 +232934,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -233785,7 +233814,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -234665,7 +234694,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -235545,7 +235574,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -236425,7 +236454,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -237305,7 +237334,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -238185,7 +238214,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -239065,7 +239094,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -239945,7 +239974,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -240825,7 +240854,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -241705,7 +241734,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -242585,7 +242614,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -243465,7 +243494,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -244345,7 +244374,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -245225,7 +245254,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -246105,7 +246134,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -246985,7 +247014,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -247865,7 +247894,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -248745,7 +248774,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -249625,7 +249654,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -250505,7 +250534,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -251385,7 +251414,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -252265,7 +252294,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -253145,7 +253174,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -254025,7 +254054,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -254905,7 +254934,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -255785,7 +255814,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -256665,7 +256694,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -257545,7 +257574,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -258425,7 +258454,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -259305,7 +259334,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -260185,7 +260214,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -261065,7 +261094,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -261945,7 +261974,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -262825,7 +262854,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -263705,7 +263734,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -264585,7 +264614,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -265465,7 +265494,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -266345,7 +266374,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -267225,7 +267254,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -268105,7 +268134,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -268985,7 +269014,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -269865,7 +269894,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -270745,7 +270774,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -271625,7 +271654,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -272505,7 +272534,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -273385,7 +273414,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -274265,7 +274294,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -275145,7 +275174,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -276025,7 +276054,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -276905,7 +276934,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -277785,7 +277814,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -278665,7 +278694,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -279545,7 +279574,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -280425,7 +280454,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -281305,7 +281334,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -282185,7 +282214,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -283065,7 +283094,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -283945,7 +283974,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -284825,7 +284854,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -285705,7 +285734,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -286585,7 +286614,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -287465,7 +287494,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -288345,7 +288374,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -289225,7 +289254,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -290105,7 +290134,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 
@@ -290985,7 +291014,7 @@ NA
 
 <td style="text-align:left;">
 
-–:–:–
+NA
 
 </td>
 

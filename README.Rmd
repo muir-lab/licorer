@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 # licorer
 
 <!-- badges: start -->
+[![Travis build status](https://travis-ci.com/muir-lab/licorer.svg?branch=master)](https://travis-ci.com/muir-lab/licorer)
 <!-- badges: end -->
 
 The licorer package is designed to aid in the reading and processing of licor data files. It uses the R package [**units**](https://CRAN.R-project.org/package=units) to ensure that values recorded with units have the correct units.
