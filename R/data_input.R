@@ -187,7 +187,7 @@ read_li6800_raw <- function(file, dec = ".") {
   rep <- c(grep("hhmmss", colnames(licor_data), value = TRUE))
   temp <- vector("logical", length(rep))
   for (i in 1:length(rep)) {
-    if (licor_data[rep[i]] != "--:--:--") {
+    if (all(licor_data[rep[i]] != "--:--:--")) {
       temp[i] <- FALSE
     } else {
       temp[i] <- TRUE
