@@ -184,16 +184,17 @@ read_li6800_raw <- function(file, dec = ".") {
                              duplicated(names(licor_data), fromLast = TRUE)] <- dupe_name
 
   # Fix missing time values
-  rep <- vector("list", length(grep("hhmmss", colnames(licor_data), value = TRUE)))
+  rep <- c(grep("hhmmss", colnames(licor_data), value = TRUE))
+  temp <- vector("logical", length(rep))
   for (i in 1:length(rep)) {
-    rep[[i]] <- "--:--:--"
+    if (licor_data[rep[i]] != "--:--:--") {
+      temp[i] <- FALSE
+    } else {
+      temp[i] <- TRUE
+    }
   }
-  attributes(rep)$names <- grep("hhmmss", colnames(licor_data), value = TRUE)
-  licor_data <- naniar::replace_with_na(licor_data, replace = rep)
-  hms_change <- grep("hhmmss", colnames(licor_data)[colSums(is.na(licor_data)) > 0], value = TRUE)
-  for (y in hms_change) {
-    class(licor_data[[y]]) <- "hms"
-  }
+
+  licor_data[rep[temp]] <- hms::parse_hms("--:--:--")
 
   # Return the class
   return(licor_data)
