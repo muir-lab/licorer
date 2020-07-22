@@ -14,13 +14,15 @@ values recorded with units have the correct units.
 
 ## Get **licorer**
 
-from [CRAN](https://CRAN.R-project.org) with:
+<!-- from [CRAN](https://CRAN.R-project.org) with: -->
 
-``` r
-install.packages("licorer")
-```
+<!-- ``` r -->
 
-or from GitHub:
+<!-- install.packages("licorer") -->
+
+<!-- ``` -->
+
+from GitHub:
 
 ``` r
 # install.packages("devtools")
@@ -43,7 +45,7 @@ tibble data object with header data stored in attributes.
 ``` r
 library(licorer)
 #> Loading required package: units
-#> udunits system database from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/units/share/udunits
+#> udunits system database from /usr/local/share/udunits
 library(units)
 library(stringr)
 library(knitr)
