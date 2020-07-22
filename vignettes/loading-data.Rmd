@@ -34,7 +34,7 @@ test_data <- read_li6800_raw(system.file("extdata", "2020-06-23_ECT_hib",
 ```
 
 ```{r, eval = TRUE, echo = FALSE}
-scroll_box(knitr::kable(test_data, caption = "Example"),
+scroll_box(knitr::kable(head(test_data), caption = "Example"),
             height = "250px", width = "700px", 
             box_css = "border: 1px solid #ddd; padding: 5px; ", 
             extra_css = NULL, fixed_thead = TRUE)

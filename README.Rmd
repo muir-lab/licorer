@@ -39,7 +39,7 @@ from GitHub:
 remotes::install_github("muir-lab/licorer")
 ```
 
-and load 'licorer'
+and load **licorer**
 
 ```r
 library("licorer")
