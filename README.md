@@ -5,12 +5,16 @@
 
 <!-- badges: start -->
 
+[![Build
+Status](https://travis-ci.com/muir-lab/licorer.svg?branch=master)](https://travis-ci.com/muir-lab/licorer)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The licorer package is designed to aid in the reading and processing of
-licor data files. It uses the R package
+The **licorer** package is designed to aid in the reading and processing
+of LI-6800 data files. It uses the R package
 [**units**](https://CRAN.R-project.org/package=units) to ensure that
-values recorded with units have the correct units.
+values recorded with units have the correct scientific units.
 
 ## Get **licorer**
 
@@ -25,8 +29,8 @@ values recorded with units have the correct units.
 from GitHub:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("muir-lab/licorer")
+# install.packages("remotes")
+remotes::install_github("muir-lab/licorer")
 ```
 
 and load ‘licorer’
@@ -44,19 +48,7 @@ tibble data object with header data stored in attributes.
 
 ``` r
 library(licorer)
-#> Loading required package: units
-#> udunits system database from /usr/local/share/udunits
-library(units)
-library(stringr)
-library(knitr)
-library(kableExtra)
 
-# CDM: is this the only way to access data. What about the utils::data() function rather than system.file()?
-test_data <- licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", 
-                               package = "licorer", mustWork = TRUE))
-```
-
-``` r
 test_data <- read_li6800_raw(system.file("extdata", "2019-05-06-0740_trillium_ovatum", 
                                          package = "licorer", mustWork = TRUE))
 ```
@@ -291416,8 +291408,6 @@ attributes(test_data)$header[1:5]
 
 Once again we are showing a subset of the list, as the actual list of
 meta-data contains around 50 elements.
-
-<!-- CDM: why isn't licor_validator called in read_li6800_raw?  -->
 
 The `licor_validator()` that ensures that the `licor` class was created
 correctly and that all variables have valid scientific units. It is

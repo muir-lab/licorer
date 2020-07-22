@@ -1,7 +1,8 @@
 Package: licorer
 Type: Package
 Title: Read and process LI-COR photosynthesis data files in R
-Version: 0.1.0
+Version: 0.0.1
+Date: 2020-07-21
 Authors@R: c(person("Daniel", "Trupp", email = "daniel.r.trupp@gmail.com",
                   role = c("aut", "cre")),
            person("Chris", "Muir", email = "cdmuir@hawaii.edu",
