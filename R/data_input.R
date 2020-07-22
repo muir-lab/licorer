@@ -341,5 +341,15 @@ validate_licor <- function (x) {
 #' @export
 
 licor <- function(file, dec = ".") {
-  suppressWarnings(validate_licor(new_licor(file, dec)))
+  retvalue <- NULL
+  if (length(file) == 1) {
+    retvalue <- suppressWarnings(validate_licor(new_licor(file, dec)))
+  } else {
+    templist <- vector("list", length = length(file))
+    for (i in 1:length(file)) {
+      templist[[i]] <- suppressWarnings(validate_licor(new_licor(file[i], dec)))
+    }
+    retvalue <- combine_licor(templist)
+  }
+  return(retvalue)
 }
