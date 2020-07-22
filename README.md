@@ -1703,7 +1703,7 @@ SS\_r
             
             <td style="text-align:left;">
             
-            –:–:–
+            NA
             
             </td>
             
@@ -2649,7 +2649,7 @@ SS\_r
                         
                         <td style="text-align:left;">
                         
-                        –:–:–
+                        NA
                         
                         </td>
                         
@@ -3595,7 +3595,7 @@ SS\_r
                                     
                                     <td style="text-align:left;">
                                     
-                                    –:–:–
+                                    NA
                                     
                                     </td>
                                     
@@ -4542,7 +4542,7 @@ SS\_r
                                                 
                                                 <td style="text-align:left;">
                                                 
-                                                –:–:–
+                                                NA
                                                 
                                                 </td>
                                                 
@@ -5536,7 +5536,7 @@ SS\_r
                                                             
                                                             <td style="text-align:left;">
                                                             
-                                                            –:–:–
+                                                            NA
                                                             
                                                             </td>
                                                             
@@ -6612,7 +6612,7 @@ SS\_r
                                                                         
                                                                         <td style="text-align:left;">
                                                                         
-                                                                        –:–:–
+                                                                        NA
                                                                         
                                                                         </td>
                                                                         
@@ -7707,7 +7707,7 @@ SS\_r
                                                                                     
                                                                                     <td style="text-align:left;">
                                                                                     
-                                                                                    –:–:–
+                                                                                    NA
                                                                                     
                                                                                     </td>
                                                                                     
@@ -8802,7 +8802,7 @@ SS\_r
                                                                                                 
                                                                                                 <td style="text-align:left;">
                                                                                                 
-                                                                                                –:–:–
+                                                                                                NA
                                                                                                 
                                                                                                 </td>
                                                                                                 
@@ -9897,7 +9897,7 @@ SS\_r
                                                                                                             
                                                                                                             <td style="text-align:left;">
                                                                                                             
-                                                                                                            –:–:–
+                                                                                                            NA
                                                                                                             
                                                                                                             </td>
                                                                                                             
@@ -10992,7 +10992,7 @@ SS\_r
                                                                                                                         
                                                                                                                         <td style="text-align:left;">
                                                                                                                         
-                                                                                                                        14:39:04
+                                                                                                                        NA
                                                                                                                         
                                                                                                                         </td>
                                                                                                                         
@@ -12087,7 +12087,7 @@ SS\_r
                                                                                                                                     
                                                                                                                                     <td style="text-align:left;">
                                                                                                                                     
-                                                                                                                                    14:39:04
+                                                                                                                                    NA
                                                                                                                                     
                                                                                                                                     </td>
                                                                                                                                     
@@ -13182,7 +13182,7 @@ SS\_r
                                                                                                                                                 
                                                                                                                                                 <td style="text-align:left;">
                                                                                                                                                 
-                                                                                                                                                14:39:04
+                                                                                                                                                NA
                                                                                                                                                 
                                                                                                                                                 </td>
                                                                                                                                                 
@@ -14277,7 +14277,7 @@ SS\_r
                                                                                                                                                             
                                                                                                                                                             <td style="text-align:left;">
                                                                                                                                                             
-                                                                                                                                                            14:39:04
+                                                                                                                                                            NA
                                                                                                                                                             
                                                                                                                                                             </td>
                                                                                                                                                             
@@ -15372,7 +15372,7 @@ SS\_r
                                                                                                                                                                         
                                                                                                                                                                         <td style="text-align:left;">
                                                                                                                                                                         
-                                                                                                                                                                        14:39:04
+                                                                                                                                                                        NA
                                                                                                                                                                         
                                                                                                                                                                         </td>
                                                                                                                                                                         
@@ -16467,7 +16467,7 @@ SS\_r
                                                                                                                                                                                     
                                                                                                                                                                                     <td style="text-align:left;">
                                                                                                                                                                                     
-                                                                                                                                                                                    14:39:04
+                                                                                                                                                                                    NA
                                                                                                                                                                                     
                                                                                                                                                                                     </td>
                                                                                                                                                                                     
@@ -17562,7 +17562,7 @@ SS\_r
                                                                                                                                                                                                 
                                                                                                                                                                                                 <td style="text-align:left;">
                                                                                                                                                                                                 
-                                                                                                                                                                                                14:39:04
+                                                                                                                                                                                                NA
                                                                                                                                                                                                 
                                                                                                                                                                                                 </td>
                                                                                                                                                                                                 
@@ -18657,7 +18657,7 @@ SS\_r
                                                                                                                                                                                                             
                                                                                                                                                                                                             <td style="text-align:left;">
                                                                                                                                                                                                             
-                                                                                                                                                                                                            14:39:04
+                                                                                                                                                                                                            NA
                                                                                                                                                                                                             
                                                                                                                                                                                                             </td>
                                                                                                                                                                                                             
@@ -19752,7 +19752,7 @@ SS\_r
                                                                                                                                                                                                                         
                                                                                                                                                                                                                         <td style="text-align:left;">
                                                                                                                                                                                                                         
-                                                                                                                                                                                                                        14:39:04
+                                                                                                                                                                                                                        NA
                                                                                                                                                                                                                         
                                                                                                                                                                                                                         </td>
                                                                                                                                                                                                                         
@@ -20847,7 +20847,7 @@ SS\_r
                                                                                                                                                                                                                                     
                                                                                                                                                                                                                                     <td style="text-align:left;">
                                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                    14:39:04
+                                                                                                                                                                                                                                    NA
                                                                                                                                                                                                                                     
                                                                                                                                                                                                                                     </td>
                                                                                                                                                                                                                                     
@@ -21942,7 +21942,7 @@ SS\_r
                                                                                                                                                                                                                                                 
                                                                                                                                                                                                                                                 <td style="text-align:left;">
                                                                                                                                                                                                                                                 
-                                                                                                                                                                                                                                                14:39:04
+                                                                                                                                                                                                                                                NA
                                                                                                                                                                                                                                                 
                                                                                                                                                                                                                                                 </td>
                                                                                                                                                                                                                                                 

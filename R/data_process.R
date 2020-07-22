@@ -102,24 +102,25 @@ get_remarks <- function(x) {
 
 combine_licor <- function(combo) {
   full <- combo[[1]]
-  for (i in 2:length(combo)) {
-    #make sure the data has the same amount of columns, fix if not
-    if (any(subset_options(full) !=  subset_options(combo[[i]]))) {
-      #make the columns the same
-      #Should this be implemented? or should the user only combine two with the
-      #same variables?
-    }
+  temp <- attr(attributes(full)$names, "data_type")
+  full <- tibble::add_column(full, file_index = 1, .before = "obs")
+  attr(attributes(full)$names, "data_type") <- c("licor_file", temp)
 
+  for (i in 2:length(combo)) {
+    temp <- attr(attributes(combo[[i]])$names, "data_type")
+    combo[[i]] <- tibble::add_column(combo[[i]], file_index = i, .before = "obs")
+    attr(attributes(combo[[i]])$names, "data_type") <- c("licor_file", temp)
+
+    temp <- attr(attributes(full)$names, "data_type")
     #combine the data
+    full[setdiff(names(combo[[i]]), names(full))] <- NA
+    combo[[i]][setdiff(names(full), names(combo[[i]]))] <- NA
     full <- rbind(full, combo[[i]])
+    attr(attributes(full)$names, "data_type") <- temp
 
     #combine header datq
-    for (j in 1:length(attributes(full)$header_data)) {
-      #should they only be added if they are different, or just add new values
-      if (attributes(full)$header_data[[j]] != attributes(combo[[i]])$header_data[[j]]) {
-        attributes(full)$header_data[[j]] <-
-          append(attributes(full)$header_data[[j]], attributes(combo[[i]])$header_data[[j]])
-      }
+    for (j in 1:max(c(length(attributes(full)$header_data)),length(attributes(combo[[i]])))) {
+        attributes(full)$header_data[[j]][i] <- attributes(combo[[i]])$header_data[[j]]
     }
   }
   invisible(full)
