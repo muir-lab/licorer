@@ -9,40 +9,31 @@ vignette: >
   %\VignetteEncoding[UTF-8]{inputenc}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+library(licorer)
+library(knitr)
+library(kableExtra)
+
+test_data <- read_li6800_raw(system.file("extdata", "2020-06-23_ECT_hib", 
+                                         package = "licorer", mustWork = TRUE))
+
 ```
 
 The **licorer** package streamlines reading and validating data from raw LI-6800 files in *R*. To read a raw LI-6800 data file, use the `licor()` method. This will create a `licor` object, which stores the data in a tibble data object with header data stored in attributes.  
 
-
-```{r setup}
-library(licorer)
-library(units)
-library(stringr)
-library(knitr)
-library(kableExtra)
-
-# CDM: is this the only way to access data. What about the utils::data() function rather than system.file()?
-test_data <- licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", 
-                               package = "licorer", mustWork = TRUE))
-
-```
-
 ```{r, eval = FALSE}
-test_data <- read_li6800_raw(system.file("extdata", "2019-05-06-0740_trillium_ovatum", 
+library(licorer)
+
+test_data <- read_li6800_raw(system.file("extdata", "2020-06-23_ECT_hib", 
                                          package = "licorer", mustWork = TRUE))
 ```
 
 ```{r, eval = TRUE, echo = FALSE}
-# CDM: You can also hide some code yet still execute it. Users don't really need to see code to make the table output
-
-# CDM: It also occurred to me that vignettes are usually available both as HTML and PDF. What does scroll_box() do in PDF?
-# DT: It looks like it loads in the help window as well. 
-
 scroll_box(knitr::kable(test_data, caption = "Example"),
             height = "250px", width = "700px", 
             box_css = "border: 1px solid #ddd; padding: 5px; ", 
@@ -74,7 +65,6 @@ attributes(test_data)$header[1:5]
 Once again we are showing a subset of the list, as the actual list of meta-data
 contains around 50 elements. 
 
-<!-- CDM: why isn't licor_validator called in read_li6800_raw?  -->
 The `licor_validator()` that ensures that the `licor` class was created correctly and that all variables have valid scientific units. It is automatically called during the `licor` method call, but not during the `read_li6800_raw()` method.
 
 Currently, the data reader only supports reading from LI-6800 files, but we 
