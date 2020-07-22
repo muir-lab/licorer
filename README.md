@@ -33,7 +33,7 @@ from GitHub:
 remotes::install_github("muir-lab/licorer")
 ```
 
-and load ‘licorer’
+and load **licorer**
 
 ``` r
 library("licorer")
@@ -471,7 +471,7 @@ P2\_dQdt
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-P3\_ΔF
+P3\_(delta)F
 
 </th>
 
@@ -561,7 +561,7 @@ Pa
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔPcham
+(delta)Pcham
 
 </th>
 
@@ -801,25 +801,25 @@ h2o\_cv
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔCO2:MN
+(delta)CO2:MN
 
 </th>
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔCO2:SLP
+(delta)CO2:SLP
 
 </th>
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔCO2:SD
+(delta)CO2:SD
 
 </th>
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔCO2:OK
+(delta)CO2:OK
 
 </th>
 
@@ -849,25 +849,25 @@ F:OK
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔH2O:MN
+(delta)H2O:MN
 
 </th>
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔH2O:SLP
+(delta)H2O:SLP
 
 </th>
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔH2O:SD
+(delta)H2O:SD
 
 </th>
 
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 
-ΔH2O:OK
+(delta)H2O:OK
 
 </th>
 
