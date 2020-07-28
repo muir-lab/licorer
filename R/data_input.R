@@ -201,6 +201,96 @@ read_li6800_raw <- function(file, dec = ".") {
 
 }
 
+
+#' Reads data from raw LI-6400 files and organizes into class licor.
+#'
+#' @inheritParams read_li6800
+#'
+#' @return Returns an object of class licor from raw LI-6400 files. Current
+#' support for LI-6800 files only.
+#'
+#' @rdname read_li6400_raw
+#'
+#' @export
+
+read_li6400_raw <- function(file, dec = ".") {
+
+  raw_lines <- readLines(file)
+
+
+  data_line <- 1L + grep(pattern = "\\$STARTOFDATA\\$", x = raw_lines,
+       value = FALSE)
+
+  # Read in variable names ----
+  var_names <- unlist(stringr::str_split(raw_lines[data_line],
+                                         pattern = "\t"))
+
+  # Read in remarks ----
+  data_lines <- raw_lines[(data_line + 2L):length(raw_lines)]
+  remark_lines <- data_lines[purrr::map_lgl(data_lines, is_remark_6400)]
+  remark_lines_copy <- gsub("\"", "", remark_lines)
+  remark_lines_copy <- sub(" ", "\t", remark_lines_copy)
+  if (length(remark_lines) != 0) {
+    remarks <- readr::read_delim(remark_lines_copy, delim = "\t" , col_names = FALSE)
+  }
+
+  # Read in data information ----
+  if (length(remark_lines) != 0) {
+    data_lines <- data_lines[!data_lines %in% remark_lines]
+  }
+  data <- readr::read_tsv(data_lines, col_names = FALSE)
+  data <- as.data.frame(data)
+
+
+  # Add names to columns
+  var_names <- gsub("\"", "", var_names)
+  colnames(data) <- var_names
+  data <- tibble::tibble(data, .name_repair = "minimal")
+
+
+  # Add remarks if there are any
+  if (exists("remarks")) {
+    attr(data, "remarks") <- remarks
+  }
+
+  # Create the class
+  licor_data <- structure(data, class = c("licor", "tbl_df", "tbl", "data.frame"))
+
+  # Read in the external data into the class ----
+  raw_lines <- gsub("\"", "", raw_lines)
+
+  external <- readr::read_delim(raw_lines, delim = "\n",
+                                n_max = data_line - 3L,
+                                col_names = FALSE) %>%
+    unlist() %>%
+    as.list()
+
+  temp <- stringr::str_extract(external, ".*=")
+  external <- gsub(".*=", "", external, perl = TRUE)
+  temp <- append(c("Version", "Date Created"), temp[3:length(temp)])
+  temp <- gsub("=", "", temp, perl = TRUE)
+  attr(external, "names") <- as.list(temp)
+  external <- as.list(unlist(external))
+
+  attr(licor_data, "header_data") <- external
+
+  # Fix missing time values
+  rep <- c(grep("HHMMSS", colnames(licor_data), value = TRUE))
+  temp <- vector("logical", length(rep))
+  for (i in 1:length(rep)) {
+    if (all(licor_data[rep[i]] != "--:--:--")) {
+      temp[i] <- FALSE
+    } else {
+      temp[i] <- TRUE
+    }
+  }
+
+  licor_data[rep[temp]] <- hms::parse_hms("--:--:--")
+
+  # Return the class
+  return(licor_data)
+}
+
 #' Constructor for class licor.
 #'
 #' @param file The name of the file to read from

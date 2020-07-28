@@ -73,11 +73,19 @@ get_remarks <- function(x) {
     y <- 0
     if (length(attributes(x)$remarks) >= 1) {
     for (i in row(attributes(x)$remarks)) {
-      y[i] <- min(which(x$hhmmss_Sys > attributes(x)$remarks[[i, 1]]))
+      if (length(grep("hhmmss", names(x))) > 0) {
+        y[i] <- min(which(x$hhmmss_Sys >= attributes(x)$remarks[[i, 1]]))
+      } else {
+        y[i] <- min(which(x$HHMMSS >= attributes(x)$remarks[[i, 1]]))
+      }
     }
     attributes(x)$remarks[3] <- y
     for (i in row(attributes(x)$remarks)) {
-      y[i] <- max(which(x$hhmmss_Sys < attributes(x)$remarks[[i, 1]]))
+      if (length(grep("hhmmss", names(x))) > 0) {
+        y[i] <- max(which(x$hhmmss_Sys <= attributes(x)$remarks[[i, 1]]))
+      } else {
+        y[i] <- max(which(x$HHMMSS <= attributes(x)$remarks[[i, 1]]))
+      }
     }
     attributes(x)$remarks[4] <- y
     attributes(attributes(x)$remarks)$names[3] <- "Before row"
