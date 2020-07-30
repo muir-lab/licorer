@@ -3,9 +3,7 @@
 #' @param file The name of the file to read from
 #' @param dec Whether to set the decimal as a "." or a ","
 #'
-#' @return Returns a dataframe from raw LiCor files. Current support
-#' for LiCor 6800 files only. LiCor 6400 file reading will be supported
-#' in a later version.
+#' @return Returns a dataframe from raw LiCor 6800 files.
 #'
 #' @examples \dontrun{
 #' read_li6800_raw(system.file("extdata", "2019-05-06-0740_trillium_ovatum",
@@ -37,6 +35,42 @@ read_li6800 <- function(file, dec = ".") {
 
 }
 
+#' Reads data from LI-6400 file and organizes it into class licor.
+#'
+#' @param file The name of the file to read from
+#' @param dec Whether to set the decimal as a "." or a ","
+#'
+#' @return Returns a dataframe from raw LiCor 6400 files.
+#'
+#' @examples \dontrun{
+#' read_li6800_raw(system.file("extdata", "2019-05-06-0740_trillium_ovatum",
+#'                             package = "licorer", mustWork = TRUE))
+#' read_li6800_raw("/path/filename")
+#' }
+#'
+#' @rdname read_li6400
+#'
+#' @export
+
+read_li6400 <- function(file, dec = ".") {
+
+  # Check file exists
+  checkmate::assert_file_exists(file)
+
+  # Check delim argument
+  dec <- match.arg(dec, c(".", ","))
+
+  # Determine if x is raw or excel
+  if (stringr::str_detect(file, ".xlsx$")) {
+    print("Not implemented yet")
+  } else {
+    licor_data <- read_li6400_raw(file, dec)
+  }
+
+  #Return data
+  return(licor_data)
+
+}
 
 #' Reads data from Excel LI-6800 files and organizes into class licor.
 #'
@@ -196,6 +230,7 @@ read_li6800_raw <- function(file, dec = ".") {
 
   licor_data[rep[temp]] <- hms::parse_hms("--:--:--")
 
+  attr(licor_data, "file_type") <- "6800"
   # Return the class
   return(licor_data)
 
@@ -204,10 +239,9 @@ read_li6800_raw <- function(file, dec = ".") {
 
 #' Reads data from raw LI-6400 files and organizes into class licor.
 #'
-#' @inheritParams read_li6800
+#' @inheritParams read_li6400
 #'
-#' @return Returns an object of class licor from raw LI-6400 files. Current
-#' support for LI-6800 files only.
+#' @return Returns an object of class licor from raw LI-6400 files.
 #'
 #' @rdname read_li6400_raw
 #'
@@ -245,8 +279,29 @@ read_li6400_raw <- function(file, dec = ".") {
   # Add names to columns
   var_names <- gsub("\"", "", var_names)
   colnames(data) <- var_names
-  data <- tibble::tibble(data, .name_repair = "minimal")
 
+  #add data types to data
+  types <- c()
+  for (i in 1:length(var_names)) {
+    if (length(grep(var_names[i], acceptable_types_6400())) > 0) {
+      types[i] <- acceptable_types_6400()[var_names[i]]
+    } else {
+      types[i] <- "UserDefVar"
+    }
+  }
+
+
+  #add units to the data
+  for (i in 1:length(names(data))) {
+    if (length(grep(names(data)[i], names(acceptable_units_6400()))) > 0) {
+      units(data[,i]) <- acceptable_units_6400()[names(data)[i]]
+    } else if (length(grep(names(data)[i], names(acceptable_units()))) > 0) {
+      units(data[,i]) <- acceptable_units()[names(data)[i]]
+    }
+  }
+
+  data <- tibble::tibble(data, .name_repair = "minimal")
+  attr(attributes(data)$names, "data_type") <- types
 
   # Add remarks if there are any
   if (exists("remarks")) {
@@ -287,6 +342,7 @@ read_li6400_raw <- function(file, dec = ".") {
 
   licor_data[rep[temp]] <- hms::parse_hms("--:--:--")
 
+  attr(licor_data, "file_type") <- "6400"
   # Return the class
   return(licor_data)
 }
@@ -310,7 +366,14 @@ read_li6400_raw <- function(file, dec = ".") {
 #' @export
 
 new_licor <- function(file, dec = ".") {
-  read_li6800_raw(file, dec)
+  raw_lines <- readLines(file)
+
+  if (length(grep(pattern = "\\$STARTOFDATA\\$", x = raw_lines,
+                  value = FALSE)) > 0) {
+    read_li6400_raw(file, dec)
+  } else {
+    read_li6800_raw(file, dec)
+  }
 }
 
 #' Validator for class licor.

@@ -1,4 +1,4 @@
-#' Get vector of acceptable data types
+#' Get vector of acceptable data types for licor 6800 files
 #'
 #' @examples
 #' acceptable_types()
@@ -12,10 +12,20 @@ acceptable_types <- function() {
 
 }
 
+#' Get vector of acceptable data types for licor 6400 files
+#'
+#' @examples
+#' acceptable_types_6400()
+#'
+#' @export
+acceptable_types_6400 <- function() {
+  c()
+}
+
 #' Get lookup table of acceptable units for data
 #'
 #' @examples
-#' acceptable_types()
+#' acceptable_units()
 #'
 #' @export
 acceptable_units <- function() {
@@ -139,4 +149,51 @@ acceptable_header <- function() {
     "LeakConst:fan_c", "LeakConst:fan_d", "LeakConst:Fs_meas", "LeakConst:Fs_true",
     "LeakConst:leak_wt", "File opened", "ChType", "CustomBLC", "Geometry", "K", "Oxygen", "S")
 
+}
+
+#' Get lookup table of acceptable units for data
+#'
+#' @examples
+#' acceptable_units_6400()
+#'
+#' @export
+acceptable_units_6400 <- function() {
+  c("Time" = "s", "CO2R" = "\u00b5mol mol-1", "CO2S" = "\u00b5mol mol-1", "DCO2" = "\u00b5mol mol-1",
+    "H2OR" = "mmol mol-1", "H2OS" = "mmol mol-1", "DH2O" = "mmol mol-1", "Flow" = "\u00b5mol s-1",
+    "Tblk" = "\u00b0C", "Tair" = "\u00b0C", "Tleaf" = "\u00b0C", "Press" = "kPa",
+    "PARi" = "\u00b5mol m-2 s-1", "PARo" = "\u00b5mol m-2 s-1", "RH_R" = "%", "RH_S" = "%",
+    "TdR" = "\u00b0C", "TdS" = "\u00b0C", "BLCslope" = "1", "BLCoffset" = "1",
+    "Battery" = "V", "Area" = "cm2", "StmRat" = "1", "FTime" = "s", "CO2R_mv" = "mV",
+    "CO2S_mv" = "mV", "H2OR_mv" = "mV", "H2OS_mv" = "mV", "Tblk_mv" = "mV", "Tair_mv" = "mV",
+    "Tleaf_mv" = "mV", "flow_mv" = "mV", "press_mv" = "mV", "parIn_mv" = "mV", "parOutmV" = "mV",
+    "CRagc_mv" = "mV", "CSagc_mv" = "mV", "HRagc_mv" = "mV", "HSagc_mv" = "mV", "Oxygen%" = "%",
+    "vapR_kPa" = "kPa", "vapS_kPa" = "kPa", "BLC1_mol" = "mol", "Tirga" = "\u00b0C",
+    "Tirga_mv" = "mv", "uc_20_mV" = "mv", "uc_21_mV" = "mv", "uc_22_mV" = "mv", "uc_23_mV" = "mv",
+    "CsMch" = "\u00b5mol mol-1", "HsMch" = "\u00b5mol mol-1", "CrMch" = "\u00b5mol mol-1",
+    "HrMch" = "\u00b5mol mol-1", "f_parin" = "1", "f_parout" = "1", "alphaK" = "1",
+    "F" = "1", "%Blue" = "1", "FlrMax" = "1", "FPeak" = "1", "FCnt" = "1", "Fzero" = "1",
+    "Fo" = "1", "Fo'" = "1", "Fm" = "1", "Fm'" = "1", "Fs" = "1", "FlrMin" = "1",
+    "ParIn@Fs" = "1", "FlrCV_%" = "%", "dF/dt" = "1", "FMaxStd" = "1", "Dcnt" = "1",
+    "chan15_mV" = "mV", "matchCO2" = "\u00b5mol mol-1", "matchH2O" = "mmol mol-1",
+    "Fmean" = "1")
+}
+
+#' Get lookup table of acceptable nonunits for data
+#'
+#' @examples
+#' acceptable_nonunits_6400()
+#'
+#' @export
+acceptable_nonunits_6400 <- function() {
+  c("HHMMSS" = "hms", "Program" = "numeric", "Status" = "numeric", "CO2" = "numeric",
+    "H2O" = "numeric", "PUMP" = "numeric", "FLOW" = "numeric", "MIXR" = "numeric",
+    "FAN" = "numeric", "CO2...FAN" = "numeric", "BLCond" = "numeric", "Obs" = "numeric",
+    "ProgPrgs" = "character", "FwMxCrLp" = "character", "DecHour" = "numeric",
+    "DOY" = "numeric", "YYYYMMDD" = "numeric", "Stable" = "numeric", "StableF" = "numeric",
+    "<letters>" = "character", "TotalCV" = "numeric", "EBal?" = "logical",
+    "FlrEvent" = "character", "M:Int...Gn" = "character", "F:Dur...Hz" = "character",
+    "D:Dur...Hz" = "character", "Aux1" = "character", "Aux2" = "character",
+    "Aux3" = "character", "Aux4" = "character", "Aux5" = "character", "Aux6" = "character",
+    "Aux7" = "character", "Aux8" = "character", "Aux9" = "character",
+    "mchElpsd" = "character")
 }
