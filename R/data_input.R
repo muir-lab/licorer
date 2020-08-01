@@ -283,7 +283,7 @@ read_li6400_raw <- function(file, dec = ".") {
   #add data types to data
   types <- c()
   for (i in 1:length(var_names)) {
-    if (length(grep(var_names[i], acceptable_types_6400())) > 0) {
+    if (length(grep(var_names[i], names(acceptable_types_6400()))) > 0) {
       types[i] <- acceptable_types_6400()[var_names[i]]
     } else {
       types[i] <- "UserDefVar"
@@ -295,8 +295,6 @@ read_li6400_raw <- function(file, dec = ".") {
   for (i in 1:length(names(data))) {
     if (length(grep(names(data)[i], names(acceptable_units_6400()))) > 0) {
       units(data[,i]) <- acceptable_units_6400()[names(data)[i]]
-    } else if (length(grep(names(data)[i], names(acceptable_units()))) > 0) {
-      units(data[,i]) <- acceptable_units()[names(data)[i]]
     }
   }
 
@@ -425,25 +423,47 @@ validate_licor <- function (x) {
          attr(attributes(values)$names, "data_type")[y] != "UserDefVar") &
         !is.na(unit_types[y])) {
       tryCatch({
-        units::set_units(values[[y]],
-                  units::as_units(acceptable_units()[attributes(values)$names[y]]),
-                  mode = "standard")
+        if (attributes(values)$file_type == "6800") {
+          units::set_units(values[[y]],
+                    units::as_units(acceptable_units()[attributes(values)$names[y]]),
+                    mode = "standard")
+        } else {
+          units::set_units(values[[y]],
+                           units::as_units(acceptable_units_6400()[attributes(values)$names[y]]),
+                           mode = "standard")
+        }
       }, error = function(e) {
+        if (attributes(values)$file_type == "6800") {
           err <- c(err, cat("Error: expected type for: \"", attributes(values)$names[y],
                             "\" should be: \"", acceptable_units()[attributes(values)$names[y]],
                             "\" but got: \"", unit_types[y], "\"\n"), sep = "")
+        } else {
+          err <- c(err, cat("Error: expected type for: \"", attributes(values)$names[y],
+                            "\" should be: \"", acceptable_units_6400()[attributes(values)$names[y]],
+                            "\" but got: \"", unit_types[y], "\"\n"), sep = "")
+        }
           cat("R lookup tabes somtimes do not produce correct resuts. If: \"",
               attributes(values)$names[y],
                 "\" does not match \n the above vatiable, it is not in the lookup table.\n")
       })
     } else {
-        if ((attr(attributes(values)$names, "data_type")[y] != "UserDefCon" &
-             attr(attributes(values)$names, "data_type")[y] != "UserDefVar") &
-            test_unit[y] != acceptable_nonunits()[attributes(values)$names[y]] ) {
-          err <- c(err, cat("Error: expected class for: \"", attributes(values)$names[y],
-                            "\" should be: \"", acceptable_nonunits()[attributes(values)$names[y]],
-                            "\" but got: \"", test_unit[y], "\"\n"), sep = "")
+        if (attributes(values)$file_type == "6800") {
+          if ((attr(attributes(values)$names, "data_type")[y] != "UserDefCon" &
+                 attr(attributes(values)$names, "data_type")[y] != "UserDefVar") &
+                test_unit[y] != acceptable_nonunits()[attributes(values)$names[y]]) {
+              err <- c(err, cat("Error: expected class for: \"", attributes(values)$names[y],
+                                "\" should be: \"", acceptable_nonunits()[attributes(values)$names[y]],
+                                "\" but got: \"", test_unit[y], "\"\n"), sep = "")
+          }
+        } else {
+          if ((attr(attributes(values)$names, "data_type")[y] != "UserDefCon" &
+               attr(attributes(values)$names, "data_type")[y] != "UserDefVar") &
+              test_unit[y] != acceptable_nonunits_6400()[attributes(values)$names[y]]) {
+            err <- c(err, cat("Error: expected class for: \"", attributes(values)$names[y],
+                              "\" should be: \"", acceptable_nonunits_6400()[attributes(values)$names[y]],
+                              "\" but got: \"", test_unit[y], "\"\n"), sep = "")
         }
+      }
     }
   }
   if (length(err) >= 1) {
