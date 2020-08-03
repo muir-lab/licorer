@@ -111,12 +111,20 @@ get_remarks <- function(x) {
 combine_licor <- function(combo) {
   full <- combo[[1]]
   temp <- attr(attributes(full)$names, "data_type")
-  full <- tibble::add_column(full, file_index = 1, .before = "obs")
+  if (attributes(full)$file_type == "6800") {
+    full <- tibble::add_column(full, file_index = 1, .before = "obs")
+  } else {
+    full <- tibble::add_column(full, file_index = 1, .before = "Obs")
+  }
   attr(attributes(full)$names, "data_type") <- c("licor_file", temp)
 
   for (i in 2:length(combo)) {
     temp <- attr(attributes(combo[[i]])$names, "data_type")
-    combo[[i]] <- tibble::add_column(combo[[i]], file_index = i, .before = "obs")
+    if (attributes(full)$file_type == "6800") {
+      combo[[i]] <- tibble::add_column(combo[[i]], file_index = i, .before = "obs")
+    } else {
+      combo[[i]] <- tibble::add_column(combo[[i]], file_index = i, .before = "Obs")
+    }
     attr(attributes(combo[[i]])$names, "data_type") <- c("licor_file", temp)
 
     temp <- attr(attributes(full)$names, "data_type")
