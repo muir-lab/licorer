@@ -251,7 +251,9 @@ read_li6800_raw <- function(file, dec = ".") {
 
 read_li6400_raw <- function(file, dec = ".", replace = NULL) {
 
-  raw_lines <- readLines(file)
+  fileprep(file)
+
+  raw_lines <- readLines(file, encoding = "UTF-8")
 
 
   data_line <- 1L + grep(pattern = "\\$STARTOFDATA\\$", x = raw_lines,
