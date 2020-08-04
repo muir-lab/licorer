@@ -74,8 +74,11 @@ attributes(test_data)$header[1:5]
 Once again we are showing a subset of the list, as the actual list of meta-data
 contains around 50 elements. 
 
-<!-- CDM: why isn't licor_validator called in read_li6800_raw?  -->
+
 The `licor_validator()` that ensures that the `licor` class was created correctly and that all variables have valid scientific units. It is automatically called during the `licor` method call, but not during the `read_li6800_raw()` method.
 
 Currently, the data reader only supports reading from LI-6800 files, but we 
 plan to add support for the LI-6400 as well.
+
+
+The `read_li6400_raw()` and it's companion `read_li6400()` are automatically called instead of the 6800 method from within `licor()` but operate a bit differently from the `read_li6800()` function. The li-Cor 6800 files come with extra, useful information like units and the system that recorded the data (ex. GasEx), which the 6400 data files do not have. The system is set by the function, based off the 6800's systems, and the units are based off the expected units for each variable. If the units for your 6400 file differ from the default units, override them with the `expected_units_6400` file.
