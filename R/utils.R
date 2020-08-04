@@ -61,7 +61,7 @@ acceptable_types_6400 <- function() {
 #' @export
 acceptable_units <- function() {
 
-  units_6400 <- c("CustomBLC" = ("mol m-2 s-1"), "Oxygen" = ("%"), "S" = ("cm2"),
+    c("CustomBLC" = ("mol m-2 s-1"), "Oxygen" = ("%"), "S" = ("cm2"),
     "A_fs" = ("\u00b5mol m-2 s-1"), "Adark" = ("\u00b5mol m-2 s-1"), "ETR" = ("\u00b5mol m-2 s-1"),
     "Qabs" = ("\u00b5mol m-2 s-1"), "f_blue" = ("1"), "FARREDFRAC" = ("\u00b5mol m-2 s-1"),
     "PFD" = ("\u00b5mol m-2 s-1"), "f_red" = ("1"), "REDMODAVG" = ("\u00b5mol m-2 s-1"),
