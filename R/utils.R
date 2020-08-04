@@ -53,7 +53,8 @@ acceptable_types_6400 <- function() {
     "NPQ" = "FLR", "PS2/1" = "FLR", "ETR" = "FLR", "Trmmol" = "GasEx", "VpdL" = "GasEx")
 }
 
-#' Get lookup table of acceptable units for data
+
+#' Get lookup table of acceptable units for data (delta altered)
 #'
 #' @examples
 #' acceptable_units()
@@ -113,27 +114,27 @@ acceptable_units <- function() {
     "Fan" = ("\u00b5mol s-1"), "Afs" = ("\u00b5mol m-2 s-1"), "Qabs_fs" = ("\u00b5mol m-2 s-1"),
     "PhiCO2" = ("\u00b5mol \u00b5mol-1"), "P1_dur" = ("ms"), "P2_dur" = ("ms"), "P3_dur" = ("ms"),
     "P1_Qmax" = ("\u00b5mol m-2 s-1"), "P2_dQdt" = ("mol m-2 s-2"), "TIME_Meas" = ("s"),
-    "Pa" = ("kPa"), "\u0394Pcham" = ("kPa"), "Tair" = ("\u00b0C"), "Offset" = ("\u00b0C"),
+    "Pa" = ("kPa"), "(delta)Pcham" = ("kPa"), "Tair" = ("\u00b0C"), "Offset" = ("\u00b0C"),
     "Offset2" = ("\u00b0C"), "Qamb_in" = ("\u00b5mol m-2 s-1"), "Qamb_out" = ("\u00b5mol m-2 s-1"),
     "Q" = ("\u00b5mol m-2 s-1"), "H2O_r_sp" = ("mmol mol-1"), "Q_modavg" = ("\u00b5mol m-2 s-1"),
     "Tled" = ("\u00b0C"), "TDigital" = ("\u00b0C"), "TPreamp" = ("\u00b0C"), "TPwrSpy" = ("\u00b0C"),
     "TDrive" = ("\u00b0C"), "Q_red" = ("\u00b5mol m-2 s-1"), "Q_blue" = ("\u00b5mol m-2 s-1"),
-    "Q_farred" = ("\u00b5mol m-2 s-1"), "TSPF" = ("s"), "\u0394CO2:MN" = ("\u00b5mol mol-1"),
-    "\u0394CO2:SLP" = ("\u00b5mol min-1 mol-1"), "\u0394CO2:SD" = ("\u00b5mol mol-1"), "F:SLP" = ("min-1"),
-    "\u0394H2O:MN" = ("mmol mol-1"), "\u0394H2O:SLP" = ("mmol min-1 mol-1"), "\u0394H2O:SD" = ("mmol mol-1"),
+    "Q_farred" = ("\u00b5mol m-2 s-1"), "TSPF" = ("s"), "(delta)CO2:MN" = ("\u00b5mol mol-1"),
+    "(delta)CO2:SLP" = ("\u00b5mol min-1 mol-1"), "(delta)CO2:SD" = ("\u00b5mol mol-1"), "F:SLP" = ("min-1"),
+    "(delta)H2O:MN" = ("mmol mol-1"), "(delta)H2O:SLP" = ("mmol min-1 mol-1"), "(delta)H2O:SD" = ("mmol mol-1"),
     "DAC_1" = ("V"), "DAC_2" = ("V"), "DAC_3" = ("V"), "DAC_4" = ("V"), "AuxPower" = ("V"),
     "MatchValveR" = ("%"), "MatchValveS" = ("%"), "Tirga" = ("\u00b0C"), "Ts" = ("\u00b0C"),
     "Tr" = ("\u00b0C"), "CO2_%" = ("%"), "Desiccant_%" = ("%"), "Humidifier_%" = ("%"),
     "Txchg_sp" = ("\u00b0C"), "CO2_r_sp" = ("\u00b5mol mol-1"), "SS_s" = ("%"), "SS_r" = ("%"),
     "blfa_1" = ("1"), "blfa_2" = ("1"), "blfa_3" = ("1"), "CorrFact" = ("1"), "alpha" = ("1"),
     "K" = ("1"), "F" = ("1"), "F_dc" = ("1"), "Pc" = ("1"), "F_avg" = ("1"),
-    "F_dc_avg" = ("1"), "count" = ("1"), "\u0394CO2:OK" = ("1"), "Stable" = ("1"), "Total" = ("1"),
-    "f_farred" = ("1"), "F:MN" = ("1"), "F:SD" = ("1"), "F:OK" = ("1"), "\u0394H2O:OK" = ("1"),
+    "F_dc_avg" = ("1"), "count" = ("1"), "(delta)CO2:OK" = ("1"), "Stable" = ("1"), "Total" = ("1"),
+    "f_farred" = ("1"), "F:MN" = ("1"), "F:SD" = ("1"), "F:OK" = ("1"), "(delta)H2O:OK" = ("1"),
     "GPIO" = ("1"), "DIAG" = ("1"), "Geometry" = ("1"), "Fo" = ("1"), "Fm" = ("1"), "Fv" = ("1"),
     "Fv/Fm" = ("1"), "Fs" = ("1"), "Fm'" = ("1"), "PhiPS2" = ("1"), "PS2/1" = ("1"),
     "Fv'/Fm'" = ("1"), "NPQ" = ("1"), "Fo'" = ("1"), "Fv'" = ("1"), "qP" = ("1"),
     "qN" = ("1"), "qP_Fo" = ("1"), "qN_Fo" = ("1"), "ID" = ("1"), "P1_Fmax" = ("1"),
-    "P3_\u0394F" = ("1"), "Custom" = ("mol m-2 s-1"), "H2O_a" = ("mmol mol-1"),
+    "P3_(delta)F" = ("1"), "Custom" = ("mol m-2 s-1"), "H2O_a" = ("mmol mol-1"),
     "state" = ("1"), "time_MchEvent" = ("s"), "co2_t" = ("s"), "h2o_t" = ("s"),
     "co2_match" = ("\u00b5mol mol-1"), "h2o_match" = ("mmol mol-1"), "cf_co2_a" = ("mmol mol-1"),
     "cf_co2_b" = ("1"), "cf_co2_c" = ("1"), "cf_co2_d" = ("1"), "cf_h2o_a" = ("mmol mol-1"),

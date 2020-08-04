@@ -6,7 +6,7 @@
 #' @return Returns a dataframe from raw LiCor 6800 files.
 #'
 #' @examples \dontrun{
-#' read_li6800_raw(system.file("extdata", "2019-05-06-0740_trillium_ovatum",
+#' read_li6800_raw(system.file("extdata", "2020-06-23_ECT_hib",
 #'                             package = "licorer", mustWork = TRUE))
 #' read_li6800_raw("/path/filename")
 #' }
@@ -89,7 +89,7 @@ read_li6800_excel <- function(file, dec = ".") {
   #                           col_names = FALSE)
   #colnames(data) <- names
   #data
-  print("To be implemented in a future patch.")
+  print("licorer does not currently read excel files. This might change in future releases. Use the raw file instead.")
 }
 
 
@@ -107,11 +107,12 @@ read_li6800_excel <- function(file, dec = ".") {
 
 read_li6800_raw <- function(file, dec = ".") {
 
-  raw_lines <- readLines(file)
+  fileprep(file)
+
+  raw_lines <- readLines(file, encoding = "UTF-8")
 
   # Read in types markers ----
-  types_line <- 1L + grep(pattern = "\\[Data\\]", x = raw_lines,
-                          value = FALSE)
+  types_line <- 1L + grep(pattern = "\\[Data\\]", x = raw_lines, value = FALSE)
   checkmate::assert_integer(types_line, len = 1L)
 
   types <- unlist(stringr::str_split(raw_lines[types_line], pattern = "\t"))
@@ -528,4 +529,31 @@ licor <- function(file, dec = ".", replace = NULL) {
     retvalue <- combine_licor(templist)
   }
   return(retvalue)
+}
+
+#' A preparation funtion to specially format files in windows
+#' For use only in windows macines, automatically called when reading in licor
+#' files.
+#'
+#' @param file The name of the licor raw file to read.
+#'
+#' @return Nothing is returned, but the file is modified.
+#' @export
+#'
+#' @rdname fileprep
+#' @export
+
+fileprep <- function(file) {
+
+  if (.Platform$OS.type == "windows") {
+    arg <- paste("((Get-Content",
+               file,
+               "-Encoding UTF8) -replace [char]916, '(delta)') | Set-Content",
+               file,
+               "-Encoding UTF8", sep = " ")
+    system2("powershell", args = arg, wait = TRUE)
+  } else {
+    arg <- c("-i", "''", "'s/'`printf '\xCE\x94'`'/(delta)/g'", file)
+    system2("sed", args = arg, wait = TRUE)
+  }
 }
