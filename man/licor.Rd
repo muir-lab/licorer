@@ -4,12 +4,14 @@
 \alias{licor}
 \title{Helper for class licor. Creates licor class objects.}
 \usage{
-licor(file, dec = ".")
+licor(file, dec = ".", replace = NULL)
 }
 \arguments{
 \item{file}{The name of the licor raw file to read.}
 
 \item{dec}{Wheter the decimal is "." or ","}
+
+\item{replace}{A named vector to replace the units for a 6400 file}
 }
 \value{
 Returns an object of class licor, checked for correctness. Supports

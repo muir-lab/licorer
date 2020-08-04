@@ -3,9 +3,7 @@
 #' @param file The name of the file to read from
 #' @param dec Whether to set the decimal as a "." or a ","
 #'
-#' @return Returns a dataframe from raw LiCor files. Current support
-#' for LiCor 6800 files only. LiCor 6400 file reading will be supported
-#' in a later version.
+#' @return Returns a dataframe from raw LiCor 6800 files.
 #'
 #' @examples \dontrun{
 #' read_li6800_raw(system.file("extdata", "2019-05-06-0740_trillium_ovatum",
@@ -37,6 +35,43 @@ read_li6800 <- function(file, dec = ".") {
 
 }
 
+#' Reads data from LI-6400 file and organizes it into class licor.
+#'
+#' @param file The name of the file to read from
+#' @param dec Whether to set the decimal as a "." or a ","
+#'@param replace A named vector to replace the units for a 6400 file
+#'
+#' @return Returns a dataframe from raw LiCor 6400 files.
+#'
+#' @examples \dontrun{
+#' read_li6800_raw(system.file("extdata", "2019-05-06-0740_trillium_ovatum",
+#'                             package = "licorer", mustWork = TRUE))
+#' read_li6800_raw("/path/filename")
+#' }
+#'
+#' @rdname read_li6400
+#'
+#' @export
+
+read_li6400 <- function(file, dec = ".", replace = NULL) {
+
+  # Check file exists
+  checkmate::assert_file_exists(file)
+
+  # Check delim argument
+  dec <- match.arg(dec, c(".", ","))
+
+  # Determine if x is raw or excel
+  if (stringr::str_detect(file, ".xlsx$")) {
+    print("Not implemented yet")
+  } else {
+    licor_data <- read_li6400_raw(file, dec, replace)
+  }
+
+  #Return data
+  return(licor_data)
+
+}
 
 #' Reads data from Excel LI-6800 files and organizes into class licor.
 #'
@@ -196,6 +231,7 @@ read_li6800_raw <- function(file, dec = ".") {
 
   licor_data[rep[temp]] <- hms::parse_hms("--:--:--")
 
+  attr(licor_data, "file_type") <- "6800"
   # Return the class
   return(licor_data)
 
@@ -204,16 +240,15 @@ read_li6800_raw <- function(file, dec = ".") {
 
 #' Reads data from raw LI-6400 files and organizes into class licor.
 #'
-#' @inheritParams read_li6800
+#' @inheritParams read_li6400
 #'
-#' @return Returns an object of class licor from raw LI-6400 files. Current
-#' support for LI-6800 files only.
+#' @return Returns an object of class licor from raw LI-6400 files.
 #'
 #' @rdname read_li6400_raw
 #'
 #' @export
 
-read_li6400_raw <- function(file, dec = ".") {
+read_li6400_raw <- function(file, dec = ".", replace = NULL) {
 
   raw_lines <- readLines(file)
 
@@ -245,8 +280,27 @@ read_li6400_raw <- function(file, dec = ".") {
   # Add names to columns
   var_names <- gsub("\"", "", var_names)
   colnames(data) <- var_names
-  data <- tibble::tibble(data, .name_repair = "minimal")
 
+  #add data types to data
+  types <- c()
+  for (i in 1:length(var_names)) {
+    if (length(grep(var_names[i], names(acceptable_types_6400()))) > 0) {
+      types[i] <- acceptable_types_6400()[var_names[i]]
+    } else {
+      types[i] <- "UserDefVar"
+    }
+  }
+
+
+  #add units to the data
+  for (i in 1:length(names(data))) {
+    if (length(grep(names(data)[i], names(acceptable_units_6400()))) > 0) {
+      units(data[,i]) <- acceptable_units_6400(replace)[names(data)[i]]
+    }
+  }
+
+  data <- tibble::tibble(data, .name_repair = "minimal")
+  attr(attributes(data)$names, "data_type") <- types
 
   # Add remarks if there are any
   if (exists("remarks")) {
@@ -287,6 +341,7 @@ read_li6400_raw <- function(file, dec = ".") {
 
   licor_data[rep[temp]] <- hms::parse_hms("--:--:--")
 
+  attr(licor_data, "file_type") <- "6400"
   # Return the class
   return(licor_data)
 }
@@ -295,6 +350,7 @@ read_li6400_raw <- function(file, dec = ".") {
 #'
 #' @param file The name of the file to read from
 #' @param dec Whether to set the decimal as a "." or a ","
+#' @param replace A named vector to replace the units for a 6400 file
 #'
 #' @return Object of class licor
 #' @export
@@ -309,8 +365,15 @@ read_li6400_raw <- function(file, dec = ".") {
 #' @rdname new_licor
 #' @export
 
-new_licor <- function(file, dec = ".") {
-  read_li6800_raw(file, dec)
+new_licor <- function(file, dec = ".", replace = NULL) {
+  raw_lines <- readLines(file)
+
+  if (length(grep(pattern = "\\$STARTOFDATA\\$", x = raw_lines,
+                  value = FALSE)) > 0) {
+    read_li6400_raw(file, dec, replace)
+  } else {
+    read_li6800_raw(file, dec)
+  }
 }
 
 #' Validator for class licor.
@@ -362,25 +425,47 @@ validate_licor <- function (x) {
          attr(attributes(values)$names, "data_type")[y] != "UserDefVar") &
         !is.na(unit_types[y])) {
       tryCatch({
-        units::set_units(values[[y]],
-                  units::as_units(acceptable_units()[attributes(values)$names[y]]),
-                  mode = "standard")
+        if (attributes(values)$file_type == "6800") {
+          units::set_units(values[[y]],
+                    units::as_units(acceptable_units()[attributes(values)$names[y]]),
+                    mode = "standard")
+        } else {
+          units::set_units(values[[y]],
+                           units::as_units(acceptable_units_6400()[attributes(values)$names[y]]),
+                           mode = "standard")
+        }
       }, error = function(e) {
+        if (attributes(values)$file_type == "6800") {
           err <- c(err, cat("Error: expected type for: \"", attributes(values)$names[y],
                             "\" should be: \"", acceptable_units()[attributes(values)$names[y]],
                             "\" but got: \"", unit_types[y], "\"\n"), sep = "")
+        } else {
+          err <- c(err, cat("Error: expected type for: \"", attributes(values)$names[y],
+                            "\" should be: \"", acceptable_units_6400()[attributes(values)$names[y]],
+                            "\" but got: \"", unit_types[y], "\"\n"), sep = "")
+        }
           cat("R lookup tabes somtimes do not produce correct resuts. If: \"",
               attributes(values)$names[y],
                 "\" does not match \n the above vatiable, it is not in the lookup table.\n")
       })
     } else {
-        if ((attr(attributes(values)$names, "data_type")[y] != "UserDefCon" &
-             attr(attributes(values)$names, "data_type")[y] != "UserDefVar") &
-            test_unit[y] != acceptable_nonunits()[attributes(values)$names[y]] ) {
-          err <- c(err, cat("Error: expected class for: \"", attributes(values)$names[y],
-                            "\" should be: \"", acceptable_nonunits()[attributes(values)$names[y]],
-                            "\" but got: \"", test_unit[y], "\"\n"), sep = "")
+        if (attributes(values)$file_type == "6800") {
+          if ((attr(attributes(values)$names, "data_type")[y] != "UserDefCon" &
+                 attr(attributes(values)$names, "data_type")[y] != "UserDefVar") &
+                test_unit[y] != acceptable_nonunits()[attributes(values)$names[y]]) {
+              err <- c(err, cat("Error: expected class for: \"", attributes(values)$names[y],
+                                "\" should be: \"", acceptable_nonunits()[attributes(values)$names[y]],
+                                "\" but got: \"", test_unit[y], "\"\n"), sep = "")
+          }
+        } else {
+          if ((attr(attributes(values)$names, "data_type")[y] != "UserDefCon" &
+               attr(attributes(values)$names, "data_type")[y] != "UserDefVar") &
+              test_unit[y] != acceptable_nonunits_6400()[attributes(values)$names[y]]) {
+            err <- c(err, cat("Error: expected class for: \"", attributes(values)$names[y],
+                              "\" should be: \"", acceptable_nonunits_6400()[attributes(values)$names[y]],
+                              "\" but got: \"", test_unit[y], "\"\n"), sep = "")
         }
+      }
     }
   }
   if (length(err) >= 1) {
@@ -415,6 +500,7 @@ validate_licor <- function (x) {
 #'
 #' @param file The name of the licor raw file to read.
 #' @param dec Wheter the decimal is "." or ","
+#' @param replace A named vector to replace the units for a 6400 file
 #'
 #' @return Returns an object of class licor, checked for correctness. Supports
 #' 6800 files currently. Correct licor objects have units on their variables
@@ -430,14 +516,14 @@ validate_licor <- function (x) {
 #' @rdname licor
 #' @export
 
-licor <- function(file, dec = ".") {
+licor <- function(file, dec = ".", replace = NULL) {
   retvalue <- NULL
   if (length(file) == 1) {
-    retvalue <- suppressWarnings(validate_licor(new_licor(file, dec)))
+    retvalue <- suppressWarnings(validate_licor(new_licor(file, dec, replace)))
   } else {
     templist <- vector("list", length = length(file))
     for (i in 1:length(file)) {
-      templist[[i]] <- suppressWarnings(validate_licor(new_licor(file[i], dec)))
+      templist[[i]] <- suppressWarnings(validate_licor(new_licor(file[i], dec, replace)))
     }
     retvalue <- combine_licor(templist)
   }
