@@ -61,7 +61,7 @@ acceptable_types_6400 <- function() {
 #' @export
 acceptable_units <- function() {
 
-  c("CustomBLC" = ("mol m-2 s-1"), "Oxygen" = ("%"), "S" = ("cm2"),
+  units_6400 <- c("CustomBLC" = ("mol m-2 s-1"), "Oxygen" = ("%"), "S" = ("cm2"),
     "A_fs" = ("\u00b5mol m-2 s-1"), "Adark" = ("\u00b5mol m-2 s-1"), "ETR" = ("\u00b5mol m-2 s-1"),
     "Qabs" = ("\u00b5mol m-2 s-1"), "f_blue" = ("1"), "FARREDFRAC" = ("\u00b5mol m-2 s-1"),
     "PFD" = ("\u00b5mol m-2 s-1"), "f_red" = ("1"), "REDMODAVG" = ("\u00b5mol m-2 s-1"),
@@ -140,7 +140,6 @@ acceptable_units <- function() {
     "cf_h2o_b" = ("1"), "cf_h2o_c" = ("1"), "cf_h2o_d" = ("1"), "co2_fit_low" = ("\u00b5mol mol-1"),
     "co2_fit_high" = ("\u00b5mol mol-1"), "h2o_fit_low" = ("mmol mol-1"),
     "h2o_fit_high" = ("mmol mol-1"), "co2_elapsed" = ("min"), "h2o_elapsed" = ("min"))
-
 }
 
 #' Get lookup table of acceptable varible types for classes other than "units"
@@ -184,12 +183,14 @@ acceptable_header <- function() {
 
 #' Get lookup table of acceptable units for data
 #'
+#' @param replace A named vector to replace the units for a 6400 file
+#'
 #' @examples
 #' acceptable_units_6400()
 #'
 #' @export
-acceptable_units_6400 <- function() {
-  c("Time" = "s", "CO2R" = "\u00b5mol mol-1", "CO2S" = "\u00b5mol mol-1", "DCO2" = "\u00b5mol mol-1",
+acceptable_units_6400 <- function(replace = NULL) {
+  units6400 <- c("Time" = "s", "CO2R" = "\u00b5mol mol-1", "CO2S" = "\u00b5mol mol-1", "DCO2" = "\u00b5mol mol-1",
     "H2OR" = "mmol mol-1", "H2OS" = "mmol mol-1", "DH2O" = "mmol mol-1", "Flow" = "\u00b5mol s-1",
     "TBlk" = "\u00b0C", "Tair" = "\u00b0C", "Tleaf" = "\u00b0C", "Press" = "kPa",
     "PARi" = "\u00b5mol m-2 s-1", "PARo" = "\u00b5mol m-2 s-1", "RH_R" = "%", "RH_S" = "%",
@@ -211,6 +212,10 @@ acceptable_units_6400 <- function() {
     "LeafAbs" = "1", "PhiCO2" = ("\u00b5mol \u00b5mol-1"), "qP" = ("1"), "qN" = ("1"),
     "NPQ" = ("1"), "PS2/1" = ("1"), "ETR" = ("\u00b5mol m-2 s-1"), "Trmmol" = "mmol m-1 s-1",
     "VpdL" = "kPa", "Cond" = "1")
+
+  units6400 <- replace(units6400, names(replace), replace)
+
+  units6400
 }
 
 #' Get lookup table of acceptable nonunits for data

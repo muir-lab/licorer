@@ -4,12 +4,14 @@
 \alias{new_licor}
 \title{Constructor for class licor.}
 \usage{
-new_licor(file, dec = ".")
+new_licor(file, dec = ".", replace = NULL)
 }
 \arguments{
 \item{file}{The name of the file to read from}
 
 \item{dec}{Whether to set the decimal as a "." or a ","}
+
+\item{replace}{A named vector to replace the units for a 6400 file}
 }
 \value{
 Object of class licor

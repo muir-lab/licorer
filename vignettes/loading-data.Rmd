@@ -80,5 +80,9 @@ The `licor_validator()` that ensures that the `licor` class was created correctl
 Currently, the data reader only supports reading from LI-6800 files, but we 
 plan to add support for the LI-6400 as well.
 
+# Reading raw Li-6400 files
 
-The `read_li6400_raw()` and it's companion `read_li6400()` are automatically called instead of the 6800 method from within `licor()` but operate a bit differently from the `read_li6800()` function. The li-Cor 6800 files come with extra, useful information like units and the system that recorded the data (ex. GasEx), which the 6400 data files do not have. The system is set by the function, based off the 6800's systems, and the units are based off the expected units for each variable. If the units for your 6400 file differ from the default units, override them with the `expected_units_6400` file.
+The `read_li6400_raw()` and it's companion `read_li6400()` are automatically called instead of the 6800 method from within `licor()` but operate a bit differently from the `read_li6800()` function. The li-Cor 6800 files come with extra, useful information like units and the system that recorded the data (ex. GasEx), which the 6400 data files do not have. The system is set by the function, based off the 6800's systems, and the units are based off the expected units for each variable. If the units for your 6400 file differ from the default units, they need to be specified with the `replace` argument when `licor()` is called.
+
+```{r}
+```

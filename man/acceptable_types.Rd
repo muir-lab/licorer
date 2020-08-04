@@ -2,12 +2,12 @@
 % Please edit documentation in R/utils.R
 \name{acceptable_types}
 \alias{acceptable_types}
-\title{Get vector of acceptable data types}
+\title{Get vector of acceptable data types for licor 6800 files}
 \usage{
 acceptable_types()
 }
 \description{
-Get vector of acceptable data types
+Get vector of acceptable data types for licor 6800 files
 }
 \examples{
 acceptable_types()

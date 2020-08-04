@@ -39,6 +39,7 @@ read_li6800 <- function(file, dec = ".") {
 #'
 #' @param file The name of the file to read from
 #' @param dec Whether to set the decimal as a "." or a ","
+#'@param replace A named vector to replace the units for a 6400 file
 #'
 #' @return Returns a dataframe from raw LiCor 6400 files.
 #'
@@ -52,7 +53,7 @@ read_li6800 <- function(file, dec = ".") {
 #'
 #' @export
 
-read_li6400 <- function(file, dec = ".") {
+read_li6400 <- function(file, dec = ".", replace = NULL) {
 
   # Check file exists
   checkmate::assert_file_exists(file)
@@ -64,7 +65,7 @@ read_li6400 <- function(file, dec = ".") {
   if (stringr::str_detect(file, ".xlsx$")) {
     print("Not implemented yet")
   } else {
-    licor_data <- read_li6400_raw(file, dec)
+    licor_data <- read_li6400_raw(file, dec, replace)
   }
 
   #Return data
@@ -247,7 +248,7 @@ read_li6800_raw <- function(file, dec = ".") {
 #'
 #' @export
 
-read_li6400_raw <- function(file, dec = ".") {
+read_li6400_raw <- function(file, dec = ".", replace = NULL) {
 
   raw_lines <- readLines(file)
 
@@ -294,7 +295,7 @@ read_li6400_raw <- function(file, dec = ".") {
   #add units to the data
   for (i in 1:length(names(data))) {
     if (length(grep(names(data)[i], names(acceptable_units_6400()))) > 0) {
-      units(data[,i]) <- acceptable_units_6400()[names(data)[i]]
+      units(data[,i]) <- acceptable_units_6400(replace)[names(data)[i]]
     }
   }
 
@@ -349,6 +350,7 @@ read_li6400_raw <- function(file, dec = ".") {
 #'
 #' @param file The name of the file to read from
 #' @param dec Whether to set the decimal as a "." or a ","
+#' @param replace A named vector to replace the units for a 6400 file
 #'
 #' @return Object of class licor
 #' @export
@@ -363,12 +365,12 @@ read_li6400_raw <- function(file, dec = ".") {
 #' @rdname new_licor
 #' @export
 
-new_licor <- function(file, dec = ".") {
+new_licor <- function(file, dec = ".", replace = NULL) {
   raw_lines <- readLines(file)
 
   if (length(grep(pattern = "\\$STARTOFDATA\\$", x = raw_lines,
                   value = FALSE)) > 0) {
-    read_li6400_raw(file, dec)
+    read_li6400_raw(file, dec, replace)
   } else {
     read_li6800_raw(file, dec)
   }
@@ -498,6 +500,7 @@ validate_licor <- function (x) {
 #'
 #' @param file The name of the licor raw file to read.
 #' @param dec Wheter the decimal is "." or ","
+#' @param replace A named vector to replace the units for a 6400 file
 #'
 #' @return Returns an object of class licor, checked for correctness. Supports
 #' 6800 files currently. Correct licor objects have units on their variables
@@ -513,14 +516,14 @@ validate_licor <- function (x) {
 #' @rdname licor
 #' @export
 
-licor <- function(file, dec = ".") {
+licor <- function(file, dec = ".", replace = NULL) {
   retvalue <- NULL
   if (length(file) == 1) {
-    retvalue <- suppressWarnings(validate_licor(new_licor(file, dec)))
+    retvalue <- suppressWarnings(validate_licor(new_licor(file, dec, replace)))
   } else {
     templist <- vector("list", length = length(file))
     for (i in 1:length(file)) {
-      templist[[i]] <- suppressWarnings(validate_licor(new_licor(file[i], dec)))
+      templist[[i]] <- suppressWarnings(validate_licor(new_licor(file[i], dec, replace)))
     }
     retvalue <- combine_licor(templist)
   }
