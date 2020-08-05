@@ -19,7 +19,7 @@ Reads data from LI-6800 file and organizes it into class licor.
 }
 \examples{
 \dontrun{
-read_li6800_raw(system.file("extdata", "2019-05-06-0740_trillium_ovatum",
+read_li6800_raw(system.file("extdata", "2020-06-23_ECT_hib",
                             package = "licorer", mustWork = TRUE))
 read_li6800_raw("/path/filename")
 }
