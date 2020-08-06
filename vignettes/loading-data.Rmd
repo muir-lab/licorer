@@ -24,7 +24,7 @@ test_data <- read_li6800_raw(system.file("extdata", "2020-06-23_ECT_hib",
 
 ```
 
-The **licorer** package streamlines reading and validating data from raw LI-6800 files in *R*. To read a raw LI-6800 data file, use the `licor()` method. This will create a `licor` object, which stores the data in a tibble data object with header data stored in attributes.  
+The **licorer** package streamlines reading and validating data from raw LI-6800 files in *R*. To read a raw LI-6800 data file, use the `licor()` method. This will create a `licor` object, which stores the data in a tibble data object with header data stored in attributes.  When presented with multiple licor files, the `licor()` method will automatically call the `combine_licor()` method shown in the [data manipulation](data-manipulation.html) vignette.
 
 ```{r, eval = FALSE}
 library(licorer)
@@ -44,7 +44,7 @@ scroll_box(knitr::kable(head(test_data), caption = "Example"),
 
 As you can see, there is a lot of data. There are `r nrow(test_data)` rows and `r ncol(test_data)` columns. 
 
-All of the data is stored either as a unit (some have the "unitless" unit) or as an approprate class (character, hms, or date/time), which are automatically assigned and validated when the file is loaded, as they are read in from the file. We'll discuss user-defined variables below.
+All of the data is stored either as a unit (some have the "unitless" unit) or as an appropriate class (character, hms, or date/time), which are automatically assigned and validated when the file is loaded, as they are read in from the file. We'll discuss user-defined variables below.
 
 LI-COR groups variables into a few different categories which are stored as attributes of the data. This topic is covered in greater detail in the vignette on [data manipulation](data-manipulation.html) and by the `subset_options()` function described below.
 

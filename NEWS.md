@@ -5,4 +5,5 @@
 
 # licorer 0.0.1 (alpha release)
 
-Read and process LI-COR photosynthesis data files in R
+Read and process LI-COR 6800 photosynthesis data files in R
+Can combine licor data files
