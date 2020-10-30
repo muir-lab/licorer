@@ -110,7 +110,8 @@ read_li6800_raw <- function(file, dec = ".") {
   data_lines <- raw_lines[(types_line + 3L):length(raw_lines)]
   remark_lines <- data_lines[purrr::map_lgl(data_lines, is_remark)]
   if (length(remark_lines) != 0) {
-    remarks <- readr::read_tsv(remark_lines, col_names = FALSE)
+    remarks <- readr::read_tsv(remark_lines, col_names = FALSE) %>%
+      rename(time = X1, remark = X2)
   }
 
   # Read in data information ----
