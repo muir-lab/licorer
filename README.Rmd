@@ -18,9 +18,11 @@ knitr::opts_chunk$set(
 # licorer
 
 <!-- badges: start -->
+[![Build Status](https://travis-ci.com/muir-lab/licorer.svg?branch=master)](https://travis-ci.com/muir-lab/licorer)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The licorer package is designed to aid in the reading and processing of licor data files. It uses the R package [**units**](https://CRAN.R-project.org/package=units) to ensure that values recorded with units have the correct units.
+The **licorer** package is designed to aid in the reading and processing of LI-6800 data files. It uses the R package [**units**](https://CRAN.R-project.org/package=units) to ensure that values recorded with units have the correct scientific units.
 
 ## Get **licorer**
 
@@ -33,11 +35,11 @@ The licorer package is designed to aid in the reading and processing of licor da
 from GitHub:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("muir-lab/licorer")
+# install.packages("remotes")
+remotes::install_github("muir-lab/licorer")
 ```
 
-and load 'licorer'
+and load **licorer**
 
 ```r
 library("licorer")

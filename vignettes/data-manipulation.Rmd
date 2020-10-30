@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette will show you how to take subsets of LI-COR data using the **licorer** package.
+This vignette will show you how to take subsets of LI-COR data or combine multiple licor objects into a single object using the **licorer** package.
 
 ## Load packages and example data
 
@@ -27,7 +27,7 @@ library(stringr)
 library(knitr)
 library(kableExtra)
 
-test_data <- licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", 
+test_data <- licor(system.file("extdata", "2020-06-23_ECT_hib", 
                                package = "licorer", mustWork = TRUE))
 
 ```
@@ -67,11 +67,25 @@ scroll_box(knitr::kable(test_data[1:5, subset_logic(test_data, choice_vec)]),
 Any remarks that are read in from the file are attached to the data as an attribute. The `get_remarks()` method will return a `tibble` of the remarks, and the lines before and after the remark was made.
 
 ``` {r}
-# Without Remarks
-get_remarks(test_data)
-
-# With Remarks
 get_remarks(licor(system.file("extdata", "2020-06-23_ECT_hib", 
                                package = "licorer", mustWork = TRUE)))
 
+```
+
+### Combining multiple licor objects
+
+The `combine_licor()` method takes a list of licor objects and fuses them into a singular licor object. It merges licors by combining their variables, creating `NA` values if a variable is not present in one of the licor values. The data will be accompanied by a file index associated with the header that indicates which file the data and header values are associated with. It is shown in the first column `file_index`
+
+```{r}
+test_data2 <- licor(system.file("extdata", "2019-05-06-0740_trillium_ovatum", 
+                               package = "licorer", mustWork = TRUE))
+
+multilicor <- combine_licor(list(test_data, test_data2))
+```
+
+```{r, eval = TRUE, echo = FALSE}
+scroll_box(knitr::kable(head(multilicor), caption = "Example"),
+            height = "250px", width = "700px", 
+            box_css = "border: 1px solid #ddd; padding: 5px; ", 
+            extra_css = NULL, fixed_thead = TRUE)
 ```

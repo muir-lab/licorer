@@ -12,16 +12,14 @@ read_li6800(file, dec = ".")
 \item{dec}{Whether to set the decimal as a "." or a ","}
 }
 \value{
-Returns a dataframe from raw LiCor files. Current support
-for LiCor 6800 files only. LiCor 6400 file reading will be supported
-in a later version.
+Returns a dataframe from raw LiCor 6800 files.
 }
 \description{
 Reads data from LI-6800 file and organizes it into class licor.
 }
 \examples{
 \dontrun{
-read_li6800_raw(system.file("extdata", "2019-05-06-0740_trillium_ovatum",
+read_li6800_raw(system.file("extdata", "2020-06-23_ECT_hib",
                             package = "licorer", mustWork = TRUE))
 read_li6800_raw("/path/filename")
 }
