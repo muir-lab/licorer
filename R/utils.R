@@ -7,7 +7,7 @@
 acceptable_types <- function() {
 
   c("Auxiliary", "Const", "FLR",   "FlrLS", "FlrStats", "GasEx", "LeafQ", "Leak",  "Match",
-    "MchEvent", "MchStatus", "Meas",  "MPF", "Stability", "Status", "Sys", "UserDefCon",
+    "MchEvent", "MchStatus", "Meas",  "Meas2", "MPF", "Stability", "Status", "Sys", "UserDefCon",
     "UserDefVar")
 
 }

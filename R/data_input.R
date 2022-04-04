@@ -111,16 +111,24 @@ read_li6800_raw <- function(file, dec = ".") {
   data_lines <- raw_lines[(types_line + 3L):length(raw_lines)]
   remark_lines <- data_lines[purrr::map_lgl(data_lines, is_remark)]
   if (length(remark_lines) != 0) {
-    remarks <- readr::read_tsv(remark_lines, col_names = FALSE)
+    # remarks <- readr::read_tsv(remark_lines, col_names = FALSE)
+    remarks = tibble::tibble(remark_lines) |>
+      tidyr::separate(remark_lines, into = c("hhmmss", "remark"), sep = "\t")
   }
 
   # Read in data information ----
   if (length(remark_lines) != 0) {
     data_lines <- data_lines[!data_lines %in% remark_lines]
   }
-  data <- readr::read_tsv(data_lines, col_names = FALSE)
-  data <- data[, cols_to_keep]
-  data <- as.data.frame(data)
+  # data <- readr::read_tsv(data_lines, col_names = FALSE)
+  # data <- data[, cols_to_keep]
+  # data <- as.data.frame(data)
+  data = data_lines |>
+    purrr::map(stringr::str_split, pattern = "\t", simplify = TRUE) |>
+    purrr::map_dfr(tibble::as_tibble, .name_repair = "unique") |>
+    readr::type_convert() |>
+    as.data.frame() |>
+    magrittr::extract(cols_to_keep)
 
   # Apply units to the data
   for (i in 1:ncol(data)) {
@@ -145,16 +153,14 @@ read_li6800_raw <- function(file, dec = ".") {
   licor_data <- structure(data, class = c("licor", "tbl_df", "tbl", "data.frame"))
 
   # Read in the external data into the class ----
-  external <- readr::read_delim(raw_lines, delim = "\n",
-                                n_max = types_line - 3L) %>%
-    unlist() %>%
-    as.list()
+  external = raw_lines[seq_len(types_line - 3L)] |>
+    purrr::map(~ {
+      x = stringr::str_split(.x, "\t", simplify = TRUE)
+      purrr::set_names(x[2], x[1])
+    })
 
-  temp <- stringr::str_extract(external, ".*(?=\\t)")
-  external <- gsub(".*\\t", "", external, perl = TRUE)
-  attr(external, "names") <- as.list(temp)
-  external <- as.list(unlist(external))
-
+  temp = sapply(external, names)
+  attr(external, "names") = as.list(temp)
   attr(licor_data, "header_data") <- external
 
   # Fix unitless data ----
