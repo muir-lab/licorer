@@ -1,16 +1,3 @@
-#' Get vector of acceptable data types for licor 6800 files
-#'
-#' @examples
-#' acceptable_types()
-#'
-#' @export
-acceptable_types <- function() {
-
-  c("Auxiliary", "Const", "FLR",   "FlrLS", "FlrStats", "GasEx", "LeafQ", "Leak",  "Match",
-    "MchEvent", "MchStatus", "Meas",  "MPF", "Stability", "Status", "Sys", "UserDefCon",
-    "UserDefVar")
-
-}
 
 #' Get vector of acceptable data types for licor 6400 files
 #'

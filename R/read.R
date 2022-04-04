@@ -1,9 +1,9 @@
 #' Reads data from LI-6800 file and organizes it into class licor.
 #'
 #' @param file The name of the file to read from
-#' @param dec Whether to set the decimal as a "." or a ","
+#' @param decimal Whether to set the decimal as a "." or a ","
 #'
-#' @return Returns a dataframe from raw LiCor 6800 files.
+#' @return Returns a data.frame from raw LI-6800 file.
 #'
 #' @examples \dontrun{
 #' read_li6800_raw(system.file("extdata", "2020-06-23_ECT_hib",
@@ -15,19 +15,19 @@
 #'
 #' @export
 
-read_li6800 <- function(file, dec = ".") {
+read_li6800 <- function(file, decimal = ".") {
 
   # Check file exists
   checkmate::assert_file_exists(file)
 
   # Check delim argument
-  dec <- match.arg(dec, c(".", ","))
+  dec = match.arg(decimal, c(".", ","))
 
   # Determine if x is raw or excel
   if (stringr::str_detect(file, ".xlsx$")) {
-    licor_data <- read_li6800_excel(file, dec)
+    licor_data = read_li6800_excel(file, dec)
   } else {
-    licor_data <- read_li6800_raw(file, dec)
+    licor_data = read_li6800_raw(file, dec)
   }
 
   #Return data
@@ -37,9 +37,8 @@ read_li6800 <- function(file, dec = ".") {
 
 #' Reads data from LI-6400 file and organizes it into class licor.
 #'
-#' @param file The name of the file to read from
-#' @param dec Whether to set the decimal as a "." or a ","
-#'@param replace A named vector to replace the units for a 6400 file
+#' @inheritParams read_li6800
+#' @param replace A named vector to replace the units for a 6400 file
 #'
 #' @return Returns a dataframe from raw LiCor 6400 files.
 #'
@@ -53,19 +52,19 @@ read_li6800 <- function(file, dec = ".") {
 #'
 #' @export
 
-read_li6400 <- function(file, dec = ".", replace = NULL) {
+read_li6400 <- function(file, decimal = ".", replace = NULL) {
 
   # Check file exists
   checkmate::assert_file_exists(file)
 
   # Check delim argument
-  dec <- match.arg(dec, c(".", ","))
+  dec = match.arg(decimal, c(".", ","))
 
   # Determine if x is raw or excel
   if (stringr::str_detect(file, ".xlsx$")) {
-    print("Not implemented yet")
+    print("Reading and excel file from LI-6400 is not implemented yet")
   } else {
-    licor_data <- read_li6400_raw(file, dec, replace)
+    licor_data = read_li6400_raw(file, dec, replace)
   }
 
   #Return data
@@ -80,7 +79,7 @@ read_li6400 <- function(file, dec = ".", replace = NULL) {
 #' @rdname read_li6800_excel
 #'
 #' @export
-read_li6800_excel <- function(file, dec = ".") {
+read_li6800_excel <- function(file, decimal = ".") {
   #names <- as.vector(readxl::read_excel(file, sheet = "Measurements",
   #                                      range = readxl::cell_rows(15),
   #                                      col_names = FALSE))
@@ -105,93 +104,67 @@ read_li6800_excel <- function(file, dec = ".") {
 #'
 #' @export
 
-read_li6800_raw <- function(file, dec = ".") {
+read_li6800_raw <- function(file, decimal = ".") {
 
-  fileprep(file)
+  # Note: I don't like this because it makes changes to raw use file
+  # fileprep(file)
 
-  raw_lines <- readLines(file, encoding = "UTF-8")
+  raw_lines = readLines(file, encoding = "UTF-8")
+  types_line = get_li6800_types_line(raw_lines)
+  data_lines = raw_lines[(types_line + 3L):length(raw_lines)]
 
-  # Read in types markers ----
-  types_line <- 1L + grep(pattern = "\\[Data\\]", x = raw_lines, value = FALSE)
-  checkmate::assert_integer(types_line, len = 1L)
-
-  types <- unlist(stringr::str_split(raw_lines[types_line], pattern = "\t"))
-
-  # Drop columns without a type
-  cols_to_drop <- nchar(types) == 0
-  if (any(cols_to_drop) > 0) {
-    message(paste("Column(s)", which(cols_to_drop), "appear to be empty. Dropping."))
-    cols_to_keep <- seq_len(length(types))[!cols_to_drop]
-    types <- types[cols_to_keep]
-  } else {
-    cols_to_keep <- seq_len(length(types))
-  }
-
-  checkmate::assert_names(types, subset.of = acceptable_types())
+  # Get variable types
+  types = get_li6800_types(raw_lines, types_line)
 
   # Read in variable names ----
-  var_names <- unlist(stringr::str_split(raw_lines[types_line + 1L],
-                                         pattern = "\t"))[cols_to_keep]
+  var_names = raw_lines[types_line + 1L] |>
+    stringr::str_split(pattern = "\t") |>
+    unlist() |>
+    magrittr::extract(attr(types, "index"))
 
   # Read in and format units ----
-  unit_vector <- unlist(stringr::str_split(raw_lines[types_line + 2L],
-                                           pattern = "\t"))[cols_to_keep]
-  unit_vector <- unit_vector %>%
-    stringr::str_trim(side = "both") %>%
-    stringr::str_replace_all("\u207b([\u00b9,\u00b2,\u00b3,\u2074,\u2075,\u2076,\u2077,\u2078,\u2079]*)", "^-\\1") %>%
-    chartr("\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079", "123456789", x = .) %>%
-    stringr::str_replace_all(" ", " * ")
+  unit_vector = get_li6800_units(raw_lines, types_line, attr(types, "index"))
 
   # Read in remarks ----
-  data_lines <- raw_lines[(types_line + 3L):length(raw_lines)]
-  remark_lines <- data_lines[purrr::map_lgl(data_lines, is_remark)]
+  remarks = get_li6800_remarks(raw_lines, types_line)
+
+  # Read in data information and apply units ----
   if (length(remark_lines) != 0) {
-    remarks <- readr::read_tsv(remark_lines, col_names = FALSE) %>%
-      rename(time = X1, remark = X2)
+    data_lines = data_lines[!data_lines %in% remark_lines]
   }
+  data = readr::read_tsv(I(data_lines), col_names = FALSE) |>
+    dplyr::select(attr(types, "index")) |>
+    as.data.frame() |>
+    apply_li6800_units(unit_vector)
 
-  # Read in data information ----
-  if (length(remark_lines) != 0) {
-    data_lines <- data_lines[!data_lines %in% remark_lines]
-  }
-  data <- readr::read_tsv(data_lines, col_names = FALSE)
-  data <- data[, cols_to_keep]
-  data <- as.data.frame(data)
-
-  # Apply units to the data
-  for (i in 1:ncol(data)) {
-    if (nchar(unit_vector[i]) > 0) {
-      units(data[,i]) <- unit_vector[i]
-    }
-  }
-
+  # CONTINUE HERE
   # Add header to data
-  colnames(data) <- var_names
-  data <- tibble::tibble(data, .name_repair = "minimal")
+  colnames(data) = var_names
+  data = tibble::tibble(data, .name_repair = "minimal")
 
   # Add data type/source to the columns
-  attr(attributes(data)$names, "data_type") <- types
+  attr(attributes(data)$names, "data_type") = types
 
   # Add remarks if there are any
   if (exists("remarks")) {
-    attr(data, "remarks") <- remarks
+    attr(data, "remarks") = remarks
   }
 
   # Create the class
-  licor_data <- structure(data, class = c("licor", "tbl_df", "tbl", "data.frame"))
+  licor_data = structure(data, class = c("licor", "tbl_df", "tbl", "data.frame"))
 
   # Read in the external data into the class ----
-  external <- readr::read_delim(raw_lines, delim = "\n",
+  external = readr::read_delim(raw_lines, delim = "\n",
                                 n_max = types_line - 3L) %>%
     unlist() %>%
     as.list()
 
-  temp <- stringr::str_extract(external, ".*(?=\\t)")
-  external <- gsub(".*\\t", "", external, perl = TRUE)
-  attr(external, "names") <- as.list(temp)
-  external <- as.list(unlist(external))
+  temp = stringr::str_extract(external, ".*(?=\\t)")
+  external = gsub(".*\\t", "", external, perl = TRUE)
+  attr(external, "names") = as.list(temp)
+  external = as.list(unlist(external))
 
-  attr(licor_data, "header_data") <- external
+  attr(licor_data, "header_data") = external
 
   # Fix unitless data ----
   for (i in 1:ncol(licor_data)) {
@@ -199,39 +172,39 @@ read_li6800_raw <- function(file, dec = ".") {
       if (nchar(unit_vector[i]) == 0 &
           (is.numeric(licor_data[[i]]) |
            is.integer(licor_data[[i]]))) {
-        units(licor_data[[i]]) <- units::unitless
+        units(licor_data[[i]]) = units::unitless
       }
     } else if (nchar(unit_vector[i]) > 0 &
                (is.numeric(licor_data[[i]]) |
                 is.integer(licor_data[[i]]))) {
-      licor_data[,i] <- as.character(licor_data[[i]])
+      licor_data[,i] = as.character(licor_data[[i]])
     }
   }
 
   # Fix Duplicate Names
-  dupe_name <- names(licor_data[duplicated(names(licor_data)) |
+  dupe_name = names(licor_data[duplicated(names(licor_data)) |
              duplicated(names(licor_data), fromLast = TRUE)])
 
-  modifier <- attr(attributes(licor_data)$names, "data_type")[duplicated(names(licor_data)) |
+  modifier = attr(attributes(licor_data)$names, "data_type")[duplicated(names(licor_data)) |
                                             duplicated(names(licor_data), fromLast = TRUE)]
 
-  dupe_name <-  paste(dupe_name, modifier, sep = "_")
+  dupe_name = paste(dupe_name, modifier, sep = "_")
 
   attr(licor_data, "names")[duplicated(names(licor_data)) |
-                             duplicated(names(licor_data), fromLast = TRUE)] <- dupe_name
+                             duplicated(names(licor_data), fromLast = TRUE)] = dupe_name
 
   # Fix missing time values
-  rep <- c(grep("hhmmss", colnames(licor_data), value = TRUE))
-  temp <- vector("logical", length(rep))
+  rep = c(grep("hhmmss", colnames(licor_data), value = TRUE))
+  temp = vector("logical", length(rep))
   for (i in 1:length(rep)) {
     if (all(licor_data[rep[i]] != "--:--:--")) {
-      temp[i] <- FALSE
+      temp[i] = FALSE
     } else {
-      temp[i] <- TRUE
+      temp[i] = TRUE
     }
   }
 
-  licor_data[rep[temp]] <- hms::parse_hms("--:--:--")
+  licor_data[rep[temp]] = hms::parse_hms("--:--:--")
 
   attr(licor_data, "file_type") <- "6800"
   # Return the class
