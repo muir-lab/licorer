@@ -8,14 +8,15 @@
 
 get_li6800_remarks = function(raw_lines, types_line) {
 
-  data_lines = raw_lines[(types_line + 3L):length(raw_lines)]
-  remark_lines = data_lines[purrr::map_lgl(data_lines, is_remark)]
-  if (length(remark_lines) != 0) {
-    remarks = readr::read_tsv(I(remark_lines), col_names = FALSE) |>
-      dplyr::rename(time = X1, remark = X2)
-  }
-
-  return(remarks)
+  purrr::map_chr(
+    raw_lines,
+    stringr::str_extract,
+    pattern = "^[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\\t.*"
+  ) |>
+    na.omit() |>
+    tibble::as_tibble() |>
+    dplyr::filter(!stringr::str_detect(value, "\\t.*\\t")) |>
+    tidyr::separate(value, c("time", "remark"), sep = "\\t")
 
 }
 

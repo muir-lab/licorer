@@ -47,7 +47,7 @@ get_li6800_units = function(raw_lines, types_line, which) {
   unit_vector = raw_lines[types_line + 2L] |>
     stringr::str_split(pattern = "\t") |>
     unlist() |>
-    magrittr::extract(cols_to_keep)
+    magrittr::extract(which)
 
   unit_vector = unit_vector |>
     stringr::str_trim(side = "both") |>
