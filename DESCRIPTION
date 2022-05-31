@@ -2,7 +2,7 @@ Package: licorer
 Type: Package
 Title: Read and Process LI-COR Photosynthesis Data Files in R
 Version: 0.0.2.9999
-Date: 2022-04-03
+Date: 2022-05-30
 Authors@R: c(person("Daniel", "Trupp", email = "daniel.r.trupp@gmail.com",
                   role = c("aut", "cre")),
            person("Chris", "Muir", email = "cdmuir@hawaii.edu",
@@ -13,7 +13,7 @@ Description: An R package designed to read in licor data files and prepare them
     constants and assorted meta data in a header attribute of the object.
 License: MIT + file LICENSE
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Encoding: UTF-8
 Depends: R (>= 3.5.0), units (>= 0.6.0)
 Imports:
