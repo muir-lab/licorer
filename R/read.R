@@ -98,6 +98,21 @@ read_li6800_raw <- function(file, decimal = ".") {
   if (length(remark_lines_in_data) != 0) {
     data_lines = data_lines[-remark_lines_in_data]
   }
+
+  # Remove rows that are not rectangular ----
+  cols_per_row = data_lines |>
+    purrr::map_int(function(.x) {
+      stringr::str_extract_all(.x, "\\t") |>
+        unlist() |>
+        length()
+    })
+
+  .mode =  as.numeric(names(sort(-table(cols_per_row)))[1])
+
+  if (any(cols_per_row != .mode)) {
+    data_lines = data_lines[cols_per_row == .mode]
+  }
+
   data = readr::read_tsv(I(data_lines), col_names = FALSE, show_col_types = FALSE) |>
     dplyr::select(attr(types, "index")) |>
     magrittr::set_colnames(var_names) |>
