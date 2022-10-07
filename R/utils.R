@@ -1,3 +1,20 @@
+<<<<<<< HEAD
+=======
+#' Get vector of acceptable data types
+#'
+#' @examples
+#' acceptable_types()
+#'
+#' @export
+acceptable_types <- function() {
+
+  c("Auxiliary", "Const", "FLR",   "FlrLS", "FlrStats", "GasEx", "LeafQ", "Leak",  "Match",
+    "MchEvent", "MchStatus", "Meas",  "Meas2", "MPF", "Stability", "Status", "Sys", "UserDefCon",
+    "UserDefVar")
+
+}
+
+>>>>>>> ba0dbd43cc9ec91e495143f253ac25a5b744607c
 #' Get lookup table of acceptable units for data (delta altered)
 #'
 #' @examples
