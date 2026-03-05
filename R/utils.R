@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 #' Get vector of acceptable data types
 #'
 #' @examples
@@ -14,7 +12,6 @@ acceptable_types <- function() {
 
 }
 
->>>>>>> ba0dbd43cc9ec91e495143f253ac25a5b744607c
 #' Get lookup table of acceptable units for data (delta altered)
 #'
 #' @examples
